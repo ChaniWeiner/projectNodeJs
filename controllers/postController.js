@@ -1,5 +1,4 @@
 import { PostService } from '../service/postService.js'
-import { PostService } from '../service/postService.js'
 
 export default class PostController {
 
