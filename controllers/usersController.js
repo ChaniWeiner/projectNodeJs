@@ -29,14 +29,15 @@ export default class UsersController {
     async addUser(req, res) {
         try {
             const userService = new UserService();
-             await userService.addUser(req.body);
+            await userService.addUser(req.body);
             res.status(200).json({ status: 200 });
         }
-        catch (ex) {
-            const err = {}
-            err.statusCode = 500;
-            err.message = ex;
-            next(err)
+        catch (err) {
+            return res.status(500).end(`err=${err}`)
+            // const err = {}
+            // err.statusCode = 500;
+            // err.message = ex;
+            // next(err)
         }
     }
 }
