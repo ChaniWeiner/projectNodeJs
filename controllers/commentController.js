@@ -5,7 +5,7 @@ export default class CommentController {
     async getcomment(req, res, next) {
         try {
             const commentService = new CommentService();
-            const data = await commentService.getAllcomment();
+            const data = await commentService.getAllComment();
             return res.json(data);
         }
         catch (err) {
@@ -29,7 +29,7 @@ export default class CommentController {
     async addcomment(req, res) {
         try {
             const commentService = new CommentService();
-            await commentService.addcomment(req.body);
+            await commentService.addComment(req.body);
             res.status(200).json({ status: 200 });
         }
         catch (ex) {
@@ -43,7 +43,7 @@ export default class CommentController {
     async deletecomment(req, res) {
         try {
             const commentService = new CommentService();
-            await commentService.deletecomment(req.params.id);
+            await commentService.deleteComment(req.params.id);
             res.json({ status: 200, data: req.params.id });
         }
         catch (ex) {

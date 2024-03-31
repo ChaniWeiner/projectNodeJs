@@ -9,7 +9,7 @@ export default class PostController {
             return res.json(data);
         }
         catch (err) {
-            return res.status(404).end(`${err}`)
+            return res.status(404).end(`${err}`);
         }
 
     }
