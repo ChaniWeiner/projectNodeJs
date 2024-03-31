@@ -2,7 +2,7 @@ import mysql from 'mysql2/promise';
 import 'dotenv/config'
 
 
-async function query(query, params){
+async function executeQuery(query, params){
     let results;
     const connection = await mysql.createConnection({
         host: 'localhost',
@@ -24,5 +24,5 @@ async function query(query, params){
 }
 
 export{
-    query
+    executeQuery
 }
