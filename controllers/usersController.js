@@ -9,7 +9,7 @@ export default class UsersController {
             return res.json(data);
         }
         catch (err) {
-            return res.statusCode(404).end("err")
+            return res.status(404).end(`${err}`)
         }
 
     }
@@ -21,7 +21,7 @@ export default class UsersController {
             return res.json(data);
         }
         catch (err) {
-            return res.statusCode(404).end("err")
+            return res.status(404).end(`${err}`)
         }
  
     }
@@ -34,6 +34,35 @@ export default class UsersController {
         }
         catch (err) {
             return res.status(500).end(`err=${err}`)
+            // const err = {}
+            // err.status = 500;
+            // err.message = ex;
+            // next(err)
+        }
+    }
+    async deleteUser(req, res) {
+        try {
+            const userService = new UserService();
+            await userService.deleteUser(req.params.id);
+            res.json({ status: 200, data: req.params.id });
+        }
+        catch (ex) {
+            return res.status(500).end(`err=${ex}`)
+            // const err = {}
+            // err.statusCode = 500;
+            // err.message = ex;
+            // next(err)
+        }
+    }
+
+    async updateUser(req, res) {
+        try {
+            const userService = new UserService();
+            await userService.updateUser(req.body,req.params.id);
+            res.json({ status: 200, data: req.params.id });
+        }
+        catch (ex) {
+            return res.status(500).end(`${ex}`)
             // const err = {}
             // err.statusCode = 500;
             // err.message = ex;

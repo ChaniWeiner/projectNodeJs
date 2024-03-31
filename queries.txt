@@ -22,13 +22,6 @@ CREATE TABLE `db_cs`.`todos` (
     ON DELETE NO ACTION
     ON UPDATE NO ACTION);
 
-
-
-
-
-
-
-
 CREATE TABLE `db_cs`.`posts` (
   `id` INT NOT NULL,
   `userId` INT NOT NULL,
@@ -54,5 +47,16 @@ CREATE TABLE `db_cs`.`coments` (
   CONSTRAINT `FK_postId`
     FOREIGN KEY (`postId`)
     REFERENCES `db_cs`.`posts` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION);
+
+CREATE TABLE `db_cs`.`passwords` (
+  `userId` INT NOT NULL,
+  `password` VARCHAR(10) NOT NULL,
+  PRIMARY KEY (`userId`),
+  UNIQUE INDEX `userId_UNIQUE` (`userId` ASC) VISIBLE,
+  CONSTRAINT `FK_userIdPswd`
+    FOREIGN KEY (`userId`)
+    REFERENCES `db_cs`.`users` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION);
