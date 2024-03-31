@@ -1,11 +1,11 @@
-import { PostService } from '../service/postService.js'
+import { CommentService } from '../service/commentService.js'
 
-export default class PostController {
+export default class CommentController {
 
-    async getPost(req, res, next) {
+    async getcomment(req, res, next) {
         try {
-            const postService = new PostService();
-            const data = await postService.getAllPost();
+            const commentService = new CommentService();
+            const data = await commentService.getAllcomment();
             return res.json(data);
         }
         catch (err) {
@@ -14,10 +14,10 @@ export default class PostController {
 
     }
 
-    async getPostById(req, res, next) {
+    async getcommentById(req, res, next) {
         try {
-            const postService = new PostService();
-            const data = await postService.getById(req.params.id);
+            const commentService = new CommentService();
+            const data = await commentService.getById(req.params.id);
             return res.json(data);
         }
         catch (err) {
@@ -26,10 +26,10 @@ export default class PostController {
  
     }
 
-    async addPost(req, res) {
+    async addcomment(req, res) {
         try {
-            const postService = new PostService();
-            await postService.addPost(req.body);
+            const commentService = new CommentService();
+            await commentService.addcomment(req.body);
             res.status(200).json({ status: 200 });
         }
         catch (ex) {
@@ -40,10 +40,10 @@ export default class PostController {
             // next(err)
         }
     }
-    async deletePost(req, res) {
+    async deletecomment(req, res) {
         try {
-            const postService = new PostService();
-            await postService.deletePost(req.params.id);
+            const commentService = new CommentService();
+            await commentService.deletecomment(req.params.id);
             res.json({ status: 200, data: req.params.id });
         }
         catch (ex) {
@@ -55,10 +55,10 @@ export default class PostController {
         }
     }
 
-    async updatePost(req, res) {
+    async updatecomment(req, res) {
         try {
-            const postService = new PostService();
-            await postService.updatePost(req.body,req.params.id);
+            const commentService = new CommentService();
+            await commentService.updatecomment(req.body,req.params.id);
             res.json({ status: 200, data: req.params.id });
         }
         catch (ex) {

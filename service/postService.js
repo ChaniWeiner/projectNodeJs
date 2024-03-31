@@ -1,7 +1,7 @@
 import 'dotenv/config'
 import { executeQuery } from './query.js'
 
-export class Postervice {
+export class PostService {
     async getAllPost() {
         const result = await executeQuery(`select * from ${process.env.DB_NAME}.post`);
         return result;
@@ -19,7 +19,7 @@ export class Postervice {
         return result;
     }
     async updatePost(post,id) {
-        const result = await executeQuery('UPDATE `db_cs`.`post` SET `userId`=?, `title` = ?,`body`=? WHERE (`id` = ?)',[post.userId, post.title, post.body,id]);
+        const result = await executeQuery('UPDATE `db_cs`.`post` SET  `title` = ?,`body`=? WHERE (`id` = ?)',[ post.title, post.body,id]);
         return result;
     }
 }
