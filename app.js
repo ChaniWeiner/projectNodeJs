@@ -1,10 +1,10 @@
 import express from "express";
 
-import { pepoleRouter } from "./routers/pepoleRouter.js";
+import { userRouter } from "./routers/userRouter.js";
 
 const app = express()
 
-app.use('/pepole',pepoleRouter);
+app.use('/users',userRouter);
 
 app.listen(8081, () => {
     console.log("start server port: 8081")
