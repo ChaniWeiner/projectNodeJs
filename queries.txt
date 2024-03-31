@@ -1,0 +1,58 @@
+CREATE SCHEMA `db_cs` ;
+
+CREATE TABLE `db_cs`.`users` (
+  `id` INT NOT NULL,
+  `name` VARCHAR(45) NOT NULL,
+  `username` VARCHAR(45) NOT NULL,
+  `phone` INT NULL,
+  `email` VARCHAR(45) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE INDEX `id_UNIQUE` (`id` ASC));	
+
+CREATE TABLE `db_cs`.`todos` (
+  `id` INT NOT NULL,
+  `userId` INT NOT NULL,
+  `title` VARCHAR(45) NOT NULL,
+  `completed` TINYINT NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE INDEX `id_UNIQUE` (`id` ASC),
+  CONSTRAINT `FK_userId`
+    FOREIGN KEY (`id`)
+    REFERENCES `db_cs`.`users` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION);
+
+
+
+
+
+
+
+
+CREATE TABLE `db_cs`.`posts` (
+  `id` INT NOT NULL,
+  `userId` INT NOT NULL,
+  `title` VARCHAR(45) NOT NULL,
+  `body` VARCHAR(45) NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE INDEX `id_UNIQUE` (`id` ASC),
+  CONSTRAINT `FKposts_userId`
+    FOREIGN KEY (`id`)
+    REFERENCES `db_cs`.`users` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION);	
+
+CREATE TABLE `db_cs`.`coments` (
+  `id` INT NOT NULL,
+  `postId` INT NOT NULL,
+  `name` VARCHAR(45) NOT NULL,
+  `email` VARCHAR(45) NOT NULL,
+  `body` VARCHAR(45) NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE INDEX `id_UNIQUE` (`id` ASC),
+  INDEX `FK_postId_idx` (`postId` ASC),
+  CONSTRAINT `FK_postId`
+    FOREIGN KEY (`postId`)
+    REFERENCES `db_cs`.`posts` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION);
