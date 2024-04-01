@@ -4,6 +4,7 @@ export default class PostController {
 
     async getPost(req, res, next) {
         try {
+            console.log("I'm here get")
             const postService = new PostService();
             const data = await postService.getAllPost();
             return res.json(data);
@@ -39,6 +40,7 @@ export default class PostController {
 
     async addPost(req, res) {
         try {
+            console.log("I'm here add")
             const postService = new PostService();
             await postService.addPost(req.body);
             res.status(200).end(`Post with id: ${req.body.id} added succefuly`);

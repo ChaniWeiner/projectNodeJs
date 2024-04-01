@@ -17,6 +17,7 @@ export default class CommentController {
     async getCommentByPostId(req, res, next) {
         try {
             const commentService = new CommentService();
+            console.log(req.query)
             const data = await commentService.getByPostId(req.query.postId);
             return res.json(data);
         }

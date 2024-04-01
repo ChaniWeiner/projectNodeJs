@@ -16,7 +16,7 @@ function Todos() {
     const [indexOfTodo, setIndexOfTodo] = useState()
 
     useEffect(() => {
-        fetch(`http://localhost:8081/todos?userId=${user.id}`)
+        fetch(`http://localhost:8081/todo?userId=${user.id}`)
             .then(response => (response.json()))
             .then(data => { setArrOfTodos(data); setArrTodosToDisplay(data) });
     }, [])
@@ -24,7 +24,7 @@ function Todos() {
 
     function deleteTodo(dataId) {
         let filtered
-        fetch(`http://localhost:8081/todos/${dataId}`, {
+        fetch(`http://localhost:8081/todo/${dataId}`, {
             method: "DELETE",
         })
             .then(response => response.json())
@@ -37,13 +37,14 @@ function Todos() {
     function updateTodo(event, idTodo, i) {
         let filtered
         event.preventDefault()
-        fetch(`http://localhost:8081/todos/${idTodo}`, {
-            method: "PATCH",
+        fetch(`http://localhost:8081/todo/${idTodo}`, {
+            method: "PUT",
             body: JSON.stringify({
                 title: event.target[0].value,
                 completed: event.target[1].checked,
             }),
-        }).then(response => response.json())
+        })
+        .then(response => response.json())
             .then(filtered = arrOfTodos.filter(obj => {
                 return obj.id != idTodo
             })

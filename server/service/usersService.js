@@ -10,6 +10,10 @@ export class UserService {
         const result = await executeQuery('select * from `db_cs`.`users` where id=?', [id]);
         return result;
     }
+    async getByUsername(username){
+        const result = await executeQuery('select * from `db_cs`.`users` where username=?', [username]);
+        return result;
+    }
     async addUser(user) {
         console.log(user)
         const result = await executeQuery('INSERT INTO `db_cs`.`users` (`id`, `name`, `username`, `phone`, `email`) VALUES (?, ?, ?, ?, ?)', [user.id, user.name, user.username, user.phone, user.email]);

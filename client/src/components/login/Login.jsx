@@ -5,26 +5,28 @@ import { currentUserContext } from '../Main'
 import { useForm } from 'react-hook-form';
 import './login.css'
 
-
 function Login() {
     const [user, setUser] = useContext(currentUserContext);
     const navigate = useNavigate();
-
 
     function login(data) {
         getUserFromDb(data.username, data.password);
     }
 
     function getUserFromDb(username, password) {
-        fetch(`http://localhost8081:/users?username=${username}&pasword=${password}`)
-            .then(response => (response.json()))
+        // ?username=${username}&pasword=${password}
+        fetch(`http://localhost:8081/user?username=${username}`
+        )
+            .then(response => response.json())
             .then(data => chackIfExsits(data));
     }
 
     function chackIfExsits(user_) {
+        console.log(user_)
         if (user_.length == 0) {
-            alert("user with that password does not exists you can sign up")
+            alert("user does not exist please sign up")
         } else {
+            //לאמת סיסמא נכונה
             setUser(user_[0])
             localStorage.setItem("user", (JSON.stringify({ userId: user_[0].id, username: user_[0].username })));
             navigate(`/home/user/${parseInt((user_[0].id), 10)}`);
@@ -50,7 +52,21 @@ function Login() {
                 {errors.password && errors.password.type === "required" && (
                     <p className="errorMsg">Password is required.</p>)}
             </form>
-
+            <button onClick={() => {
+                fetch(`http://localhost:8081/post`
+                    , {
+                        method: 'post',
+                        body: JSON.stringify({
+                            id: 3,
+                            userId: 2,
+                            title: "kjhgf",
+                            body: "lkjhgkjh"
+                        })
+                    })
+                    // .then(response => response.json())
+                    .then(r => { console.log(r) })
+            }}
+            >click me</button>
             <button onClick={() => { navigate('/register') }} >sign up</button>
 
         </>

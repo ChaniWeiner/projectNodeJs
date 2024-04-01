@@ -23,7 +23,18 @@ export default class UsersController {
         catch (err) {
             return res.status(404).end(`${err}`)
         }
- 
+
+    }
+    
+    async getUserByUsername(req, res, next) {
+        try {
+            const userService = new UserService();
+            const data = await userService.getByUsername(req.query.username);
+            return res.json(data);
+        }
+        catch (err) {
+            return res.status(404).end(`${err}`)
+        }
     }
 
     async addUser(req, res) {
@@ -58,7 +69,7 @@ export default class UsersController {
     async updateUser(req, res) {
         try {
             const userService = new UserService();
-            await userService.updateUser(req.body,req.params.id);
+            await userService.updateUser(req.body, req.params.id);
             res.status(200).end(`user with id: ${req.params.id} updated succefuly`);
         }
         catch (ex) {
