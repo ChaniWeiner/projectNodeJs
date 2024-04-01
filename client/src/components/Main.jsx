@@ -6,12 +6,8 @@ import Register from './register/Register'
 import Info from './info/Info'
 import Todos from './todos/Todos'
 import Posts from './posts/Posts'
-import Albums from './albums/Albums'
-import Photos from './photos/Photos'
 import Comments from './comments/Comments'
 import PostsLayout from './posts/PostsLayout'
-import AlbumLayout from './albums/AlbumsLayout'
-import AddTodo from './todos/AddTodo'
 import TodosLayout from './todos/TodosLayout'
 import { useState, useEffect, useContext, createContext } from 'react'
 import NoPageFound from './NoPageFound'
@@ -24,7 +20,7 @@ function Main() {
 
     useEffect(() => {
         const user = JSON.parse(localStorage.getItem("user"))
-        user && fetch(`http://localhost:3000/users?username=${user.username}`)
+        user && fetch(`http://localhost:8081/users?username=${user.username}`)
             .then(response =>
                 response.json())
                 .then(data => setUser(data[0]))
@@ -50,10 +46,6 @@ function Main() {
                             <Route path="posts" element={<PostsLayout />} >
                                 <Route index element={<Posts />} />
                                 <Route path=":id/comments" element={<Comments />} />
-                            </Route>
-                            <Route path="albums" element={<AlbumLayout />} >
-                                <Route index element={<Albums />} />
-                                <Route path=":albumId/photos" element={<Photos />} />
                             </Route>
                         </Route>
                         <Route path="*" element={<NoPageFound />} />

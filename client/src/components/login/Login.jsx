@@ -16,7 +16,7 @@ function Login() {
     }
 
     function getUserFromDb(username, password) {
-        fetch(`http://localhost:3000/users?username=${username}&website=${password}`)
+        fetch(`http://localhost8081:/users?username=${username}&pasword=${password}`)
             .then(response => (response.json()))
             .then(data => chackIfExsits(data));
     }

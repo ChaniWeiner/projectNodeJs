@@ -15,7 +15,7 @@ function AddPost({ arrOfPosts, setArrOfPosts, setAddScreen, setArrPostsToDisplay
             title: event.target[0].value,
             body: event.target[1].value,
         }
-        fetch(`http://localhost:3000/generalNumberOfEachItem/posts`).
+        fetch(`http://localhost:8081/generalNumberOfEachItem/posts`).
             then(response => (response.json()))
             .then(data => addPostToDb(data, post))
 
@@ -23,7 +23,7 @@ function AddPost({ arrOfPosts, setArrOfPosts, setAddScreen, setArrPostsToDisplay
 
     function addPostToDb(generalNumberOfPost, currentPost) {
         currentPost.id = (JSON.parse(parseInt(generalNumberOfPost.postsGeneralNumber)) + 1).toString();
-        fetch(`http://localhost:3000/posts`, {
+        fetch(`http://localhost:8081/posts`, {
             method: 'POST',
             body: JSON.stringify({
                 userId: currentPost.userId,
@@ -42,7 +42,7 @@ function AddPost({ arrOfPosts, setArrOfPosts, setAddScreen, setArrPostsToDisplay
 
 
     function updateGeneralNumberOfPost(number) {
-        fetch(`http://localhost:3000/generalNumberOfEachItem/posts`, {
+        fetch(`http://localhost:8081/generalNumberOfEachItem/posts`, {
             method: "PATCH",
             body: JSON.stringify({
                 postsGeneralNumber: number

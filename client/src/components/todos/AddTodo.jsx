@@ -10,7 +10,7 @@ function AddTodo({ arrOfTodos, setArrOfTodos,setAddScreen,setArrTodosToDisplay,u
             title: event.target[0].value,
             completed: event.target[1].checked,
         }
-        fetch(`http://localhost:3000/generalNumberOfEachItem/todos`).
+        fetch(`http://localhost:8081/generalNumberOfEachItem/todos`).
             then(response => (response.json()))
             .then(data => addTodoToDb(data, todo))
 
@@ -19,7 +19,7 @@ function AddTodo({ arrOfTodos, setArrOfTodos,setAddScreen,setArrTodosToDisplay,u
     function addTodoToDb(generalNumberOfTodo, currentTodo) {
         currentTodo.id = (JSON.parse(parseInt(generalNumberOfTodo.todosGeneralNumber)) + 1).toString();
 
-        fetch(`http://localhost:3000/todos`, {
+        fetch(`http://localhost:8081/todos`, {
             method: 'POST',
             body: JSON.stringify({
                 userId: currentTodo.userId,
@@ -38,7 +38,7 @@ function AddTodo({ arrOfTodos, setArrOfTodos,setAddScreen,setArrTodosToDisplay,u
 
 
     function updateGeneralNumberOfTodo(number) {
-        fetch(`http://localhost:3000/generalNumberOfEachItem/todos`, {
+        fetch(`http://localhost:8081/generalNumberOfEachItem/todos`, {
             method: "PATCH",
             body: JSON.stringify({
                 todosGeneralNumber: number

@@ -12,14 +12,14 @@ function AddComment({ arrOfComments, setArrOfComments, setAddScreen, user ,post}
             name: event.target[0].value,
             body: event.target[1].value,
         }
-        fetch(`http://localhost:3000/generalNumberOfEachItem/comments`).
+        fetch(`http://localhost:8081/generalNumberOfEachItem/comments`).
             then(response => (response.json()))
             .then(data => addCommentToDb(data, comment))
     }
 
     function addCommentToDb(generalNumberOfComment, currentComment) {
         currentComment.id = (JSON.parse(parseInt(generalNumberOfComment.commentsGeneralNumber)) + 1).toString();
-        fetch(`http://localhost:3000/comments`, {
+        fetch(`http://localhost:8081/comments`, {
             method: 'POST',
             body: JSON.stringify({
                 postId: currentComment.postId,
@@ -38,7 +38,7 @@ function AddComment({ arrOfComments, setArrOfComments, setAddScreen, user ,post}
     }
 
     function updateGeneralNumberOfComment(number) {
-        fetch(`http://localhost:3000/generalNumberOfEachItem/comments`, {
+        fetch(`http://localhost:8081/generalNumberOfEachItem/comments`, {
             method: "PATCH",
             body: JSON.stringify({
                 commentsGeneralNumber: number

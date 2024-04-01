@@ -19,14 +19,14 @@ function Comments() {
     const [indexOfComment, setIndexOfComment] = useState()
 
     useEffect(() => {
-        fetch(`http://localhost:3000/comments?postId=${post.id}`)
+        fetch(`http://localhost:8081/comments?postId=${post.id}`)
             .then(response => (response.json()))
             .then(data => setArrOfComments(data));
     }, [])
 
     function delteComment(dataId) {
         let filtered
-        fetch(`http://localhost:3000/comments/${dataId}`, {
+        fetch(`http://localhost:8081/comments/${dataId}`, {
             method: "DELETE",
         })
             .then(response => response.json())
@@ -41,7 +41,7 @@ function Comments() {
     function updateComment(event, idComment, i) {
         let filtered
         event.preventDefault()
-        fetch(`http://localhost:3000/comments/${idComment}`, {
+        fetch(`http://localhost:8081/comments/${idComment}`, {
             method: "PATCH",
             body: JSON.stringify({
                 name: event.target[0].value,

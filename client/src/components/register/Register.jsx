@@ -14,7 +14,7 @@ function Register() {
     const navigate = useNavigate();
 
     useEffect(() => {
-        fetch(`http://localhost:3000/generalNumberOfEachItem/user`).
+        fetch(`http://localhost:8081/generalNumberOfEachItem/user`).
             then(response => (response.json()))
             .then(data => setGeneralNumberOfUser(data))
     }, [isExtendedDetailsOpen])
@@ -22,7 +22,7 @@ function Register() {
     function filInExtendedDetails(data) {
         let currentUserId = (JSON.parse(parseInt(generalNumberOfUser.userGeneralNumber)) + 1).toString();
         console.log(currentUserId)
-        fetch(`http://localhost:3000/users`, {
+        fetch(`http://localhost:8081/users`, {
             method: 'POST',
             body: JSON.stringify({
                 id: currentUserId,
@@ -65,7 +65,7 @@ function Register() {
             id: "user",
             userGeneralNumber: number
         }
-        fetch(`http://localhost:3000/generalNumberOfEachItem/user`, {
+        fetch(`http://localhost:8081/generalNumberOfEachItem/user`, {
             method: "PUT",
             body: JSON.stringify(user),
         })
@@ -79,7 +79,7 @@ function Register() {
         if (password != verifyPassword)
             alert("The passwords do not match")
         else {
-            fetch(`http://localhost:3000/users?username=${username}`)
+            fetch(`http://localhost:8081/users?username=${username}`)
                 .then((response) => response.json()).then((data) => {
                     if (data.length != 0) {
                         alert("User already exists:");
