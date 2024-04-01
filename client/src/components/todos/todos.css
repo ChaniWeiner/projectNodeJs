@@ -1,0 +1,25 @@
+.todoStyle {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+  }
+  .todoStyle div{
+    border: solid;
+  }
+  input{
+    width: 80%;
+  }
+  .complete{
+    display: flex;
+    align-items: center;
+  }
+  .input{
+    width: 25%;
+  }
+
+ .input [type="checkBox"] {
+    width: 17px;
+    height: 17px;
+    vertical-align: bottom;
+    position: relative;
+    top: -2px;
+ }

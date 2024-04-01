@@ -1,0 +1,7 @@
+.postStyle {
+    display: grid;
+    grid-template-columns: auto auto auto;
+  }
+  .postStyle div{
+    border: solid;
+  }
