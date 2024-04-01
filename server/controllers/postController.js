@@ -23,17 +23,28 @@ export default class PostController {
         catch (err) {
             return res.status(404).end(`${err}`)
         }
- 
+
+    }
+
+    async getPostByUserId(req, res, next) {
+        try {
+            const postService = new PostService();
+            const data = await postService.getByUserId(req.query.userId);
+            return res.json(data);
+        }
+        catch (err) {
+            return res.status(404).end(`${err}`)
+        }
     }
 
     async addPost(req, res) {
         try {
             const postService = new PostService();
             await postService.addPost(req.body);
-            res.status(200).json({ status: 200 });
+            res.status(200).end(`Post with id: ${req.body.id} added succefuly`);
         }
         catch (ex) {
-            return res.status(500).end(`err=${ex}`)
+            return res.status(500).end(`${ex}`)
             // const err = {}
             // err.status = 500;
             // err.message = ex;
@@ -47,7 +58,7 @@ export default class PostController {
             res.json({ status: 200, data: req.params.id });
         }
         catch (ex) {
-            return res.status(500).end(`err=${ex}`)
+            res.status(200).end(`Post with id: ${req.params.id} deleted succefuly`);
             // const err = {}
             // err.statusCode = 500;
             // err.message = ex;
@@ -58,11 +69,11 @@ export default class PostController {
     async updatePost(req, res) {
         try {
             const postService = new PostService();
-            await postService.updatePost(req.body,req.params.id);
+            await postService.updatePost(req.body, req.params.id);
             res.json({ status: 200, data: req.params.id });
         }
         catch (ex) {
-            return res.status(500).end(`${ex}`)
+            res.status(200).end(`Post with id: ${req.params.id} updated succefuly`);
             // const err = {}
             // err.statusCode = 500;
             // err.message = ex;

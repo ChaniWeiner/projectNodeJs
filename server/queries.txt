@@ -17,7 +17,7 @@ CREATE TABLE `db_cs`.`todos` (
   PRIMARY KEY (`id`),
   UNIQUE INDEX `id_UNIQUE` (`id` ASC),
   CONSTRAINT `FK_userId`
-    FOREIGN KEY (`id`)
+    FOREIGN KEY (`userId`)
     REFERENCES `db_cs`.`users` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION);
@@ -30,12 +30,12 @@ CREATE TABLE `db_cs`.`posts` (
   PRIMARY KEY (`id`),
   UNIQUE INDEX `id_UNIQUE` (`id` ASC),
   CONSTRAINT `FKposts_userId`
-    FOREIGN KEY (`id`)
+    FOREIGN KEY (`userId`)
     REFERENCES `db_cs`.`users` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION);	
 
-CREATE TABLE `db_cs`.`coments` (
+CREATE TABLE `db_cs`.`comments` (
   `id` INT NOT NULL,
   `postId` INT NOT NULL,
   `name` VARCHAR(45) NOT NULL,

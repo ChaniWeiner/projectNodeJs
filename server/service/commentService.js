@@ -10,6 +10,10 @@ export class CommentService {
         const result = await executeQuery('select * from `db_cs`.`comments` where id=?', [id]);
         return result;
     }
+    async getByPostId(postId){
+        const result = await executeQuery('select * from `db_cs`.`comments` where postId=?', [postId]);
+        return result;
+    }
     async addComment(comment) {
         const result = await executeQuery('INSERT INTO `db_cs`.`comments` (`id`, `postId`, `name`, `email`,`body`) VALUES (?, ?, ?, ?,?)', [comment.id, comment.postId, comment.name,comment.email, comment.body]);
         return result;

@@ -8,7 +8,7 @@ import { commentRouter } from "./routers/commentRouter.js";
 const app = express()
 
 app.use(express.json());
-app.use('/users',userRouter);
+app.use('/user',userRouter);
 app.use('/post',postRouter);
 app.use('/todo',todoRouter);
 app.use('/comment',commentRouter);

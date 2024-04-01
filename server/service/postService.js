@@ -10,6 +10,10 @@ export class PostService {
         const result = await executeQuery('select * from `db_cs`.`posts` where id=?', [id]);
         return result;
     }
+    async getByUserId(userId) {
+        const result = await executeQuery('select * from `db_cs`.`posts` where userId=?', [userId]);
+        return result;
+    }
     async addPost(post) {
         const result = await executeQuery('INSERT INTO `db_cs`.`posts` (`id`, `userId`, `title`, `body`) VALUES (?, ?, ?, ?)', [post.id, post.userId, post.title, post.body]);
         return result;
