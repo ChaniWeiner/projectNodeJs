@@ -1,3 +1,13 @@
+***create table comment(
+  id int AUTO_INCREMENT,
+    postId int not null,
+    name varchar(255),
+    email varchar(255),
+    body varchar(255),
+  primary key(id),
+    foreign key (postId) references post(id)
+);
+
 CREATE SCHEMA `db_cs` ;
 
 CREATE TABLE `db_cs`.`users` (

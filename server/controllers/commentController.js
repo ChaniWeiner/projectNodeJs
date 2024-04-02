@@ -42,7 +42,7 @@ export default class CommentController {
         try {
             const commentService = new CommentService();
             await commentService.addComment(req.body);
-            res.status(200).end(`Comment with id: ${req.body.id} added succefuly`);
+            res.status(200).end(`Comment added succefuly`);
         }
         catch (ex) {
             return res.status(500).end(`${ex}`)

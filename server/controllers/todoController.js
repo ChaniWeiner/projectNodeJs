@@ -23,16 +23,28 @@ export default class TodoController {
         catch (err) {
             return res.status(404).end(`${err}`)
         }
+    }
 
+    async getTodosByUserId(req, res, next) {
+        try {
+            const todoService = new TodoService();
+            const data = await todoService.getByUserId(req.query.userId);
+            return res.json(data);
+        }
+        catch (err) {
+            return res.status(404).end(`${err}`)
+        }
     }
 
     async addTodo(req, res) {
         try {
+            console.log(req.body)
             const todoService = new TodoService();
             await todoService.addTodo(req.body);
-            res.status(200).end(`Todo with id: ${req.body.id} added succefuly`);
+            res.status(200).end(`Todo added succefuly`);
         }
         catch (ex) {
+            console.log(ex)
             return res.status(500).end(`${ex}`)
             // const err = {}
             // err.status = 500;
@@ -57,6 +69,7 @@ export default class TodoController {
 
     async updateTodo(req, res) {
         try {
+            console.log(req.body)
             const todoService = new TodoService();
             await todoService.updateTodo(req.body, req.params.id);
             res.status(200).end(`Todo with id: ${req.params.id} updated succefuly`);

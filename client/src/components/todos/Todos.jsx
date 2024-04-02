@@ -27,7 +27,7 @@ function Todos() {
         fetch(`http://localhost:8081/todo/${dataId}`, {
             method: "DELETE",
         })
-            .then(response => response.json())
+            .then(response => response.toString())
             .then(filtered = arrOfTodos.filter(obj => {
                 return obj.id != dataId;
             })
@@ -44,7 +44,7 @@ function Todos() {
                 completed: event.target[1].checked,
             }),
         })
-        .then(response => response.json())
+        .then(response => response.toString())
             .then(filtered = arrOfTodos.filter(obj => {
                 return obj.id != idTodo
             })

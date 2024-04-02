@@ -23,14 +23,14 @@ function Posts() {
     const navigate = useNavigate()
 
     useEffect(() => {
-        fetch(`http://localhost:8081/posts?userId=${user.id}`)
+        fetch(`http://localhost:8081/post?userId=${user.id}`)
             .then(response => (response.json()))
             .then(data => (setArrOfPosts(data), setArrPostsToDisplay(data)));
     }, [])
 
 
     function bringAllPostsFromDb() {
-        fetch(`http://localhost:8081/posts`)
+        fetch(`http://localhost:8081/post`)
             .then(response => (response.json()))
             .then((data) => { setArrOfAllPosts(data), setArrPostsToDisplay(data),setShowAllPosts(true) })
     }
@@ -38,7 +38,7 @@ function Posts() {
 
     function deletePost(dataId) {
         let filtered
-        fetch(`http://localhost:8081/posts/${dataId}`, {
+        fetch(`http://localhost:8081/post/${dataId}`, {
             method: "DELETE",
         })
             .then(response => response.json())
@@ -52,7 +52,7 @@ function Posts() {
     function updatePost(event, idPost, i) {
         let filtered
         event.preventDefault()
-        fetch(`http://localhost:8081/posts/${idPost}`, {
+        fetch(`http://localhost:8081/post/${idPost}`, {
             method: "PATCH",
             body: JSON.stringify({
                 title: event.target[0].value,

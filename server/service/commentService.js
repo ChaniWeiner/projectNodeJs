@@ -15,7 +15,7 @@ export class CommentService {
         return result;
     }
     async addComment(comment) {
-        const result = await executeQuery('INSERT INTO `db_cs`.`comments` (`id`, `postId`, `name`, `email`,`body`) VALUES (?, ?, ?, ?,?)', [comment.id, comment.postId, comment.name,comment.email, comment.body]);
+        const result = await executeQuery('INSERT INTO `db_cs`.`comments` (`id`, `postId`, `name`, `email`,`body`) VALUES (?, ?, ?, ?,?)', [null, comment.postId, comment.name,comment.email, comment.body]);
         return result;
     }
     async deleteComment(id) {

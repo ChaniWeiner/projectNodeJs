@@ -10,8 +10,12 @@ export class TodoService {
         const result = await executeQuery('select * from `db_cs`.`todos` where id=?', [id]);
         return result;
     }
+    async getByUserId(userId){
+        const result = await executeQuery('select * from `db_cs`.`todos` where userId=?', [userId]);
+        return result;
+    }
     async addTodo(todo) {
-        const result = await executeQuery('INSERT INTO `db_cs`.`todos` (`id`, `userId`, `title`, `completed`) VALUES (?, ?, ?, ?)', [todo.id, todo.userId, todo.title, todo.completed]);
+        const result = await executeQuery('INSERT INTO `db_cs`.`todos` (`id`, `userId`, `title`, `completed`) VALUES (?, ?, ?, ?)', [null, todo.userId, todo.title, todo.completed]);
         return result;
     }
     async deleteTodo(id) {

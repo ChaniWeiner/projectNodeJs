@@ -15,7 +15,7 @@ export class PostService {
         return result;
     }
     async addPost(post) {
-        const result = await executeQuery('INSERT INTO `db_cs`.`posts` (`id`, `userId`, `title`, `body`) VALUES (?, ?, ?, ?)', [post.id, post.userId, post.title, post.body]);
+        const result = await executeQuery('INSERT INTO `db_cs`.`posts` (`id`, `userId`, `title`, `body`) VALUES (?, ?, ?, ?)', [null, post.userId, post.title, post.body]);
         return result;
     }
     async deletePost(id) {
