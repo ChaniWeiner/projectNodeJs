@@ -33,21 +33,21 @@ function Todos() {
             ).then(setArrTodosToDisplay(filtered)).then(setArrOfTodos(filtered))
     }
 
-    function updateTodo(event, idTodo, i) {
+    function updateTodo(event, todo, i) {
         let filtered
         event.preventDefault()
-        fetch(`http://localhost:8081/todo/${idTodo}`, {
-            method: "PUT",
+        fetch(`http://localhost:8081/todo/${todo.id}`, {
+            method: "PUT",headers: { 'Content-Type': 'application/json', 'charset':'UTF-8' },
             body: JSON.stringify({
+                id:todo.id,
+                userId:todo.userId,
                 title: event.target[0].value,
                 completed: event.target[1].checked,
-            }),
-        })
-            .then(response => response.toString())
+            })})
+            .then(response => response.json())
             .then(filtered = arrOfTodos.filter(obj => {
-                return obj.id != idTodo
-            })
-            )
+                return obj.id != todo.id
+            }))
             .then(data => setArrTodosToDisplay((prev) => {
                 const tempArrOfTodos = [
                     ...prev.slice(0, i),
@@ -74,7 +74,7 @@ function Todos() {
                 {arrTodosToDisplay.map((todo, i) => {
                     return (
                         <div key={i} id={i + 1}> <h4>Id todo: {todo.id}</h4>
-                            <form onSubmit={() => updateTodo(event, todo.id, i)}>
+                            <form onSubmit={() => updateTodo(event, todo, i)}>
                                 {indexOfTodo != i ? <h5>{todo.title}</h5> :
                                     <input type="text" defaultValue={todo.title} />}
 

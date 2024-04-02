@@ -10,8 +10,10 @@ export class UserService {
         const result = await executeQuery('select * from `db_cs`.`users` where id=?', [id]);
         return result;
     }
-    async getByUsername(username){
-        const result = await executeQuery('select * from `db_cs`.`users` where username=?', [username]);
+    async getByUsername(username) {
+        console.log("Hi I am in service " + username + typeof username)
+        const result = await executeQuery(`select * from \`db_cs\`.\`users\` where username='${username}'`);
+        console.log("result: " + result)
         return result;
     }
     async addUser(user) {
@@ -23,8 +25,8 @@ export class UserService {
         const result = await executeQuery('DELETE from `db_cs`.`users` where id=?', [id]);
         return result;
     }
-    async updateUser(user,id) {
-        const result = await executeQuery('UPDATE `db_cs`.`users` SET `name`=?, `username` = ?,`phone`=?,`email`=? WHERE (`id` = ?)',[user.name, user.username, user.phone, user.email,id]);
+    async updateUser(user, id) {
+        const result = await executeQuery('UPDATE `db_cs`.`users` SET `name`=?, `username` = ?,`phone`=?,`email`=? WHERE (`id` = ?)', [user.name, user.username, user.phone, user.email, id]);
         return result;
     }
 }

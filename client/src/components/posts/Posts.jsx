@@ -41,7 +41,7 @@ function Posts() {
     function updatePost(event, idPost, i) {
         let filtered
         event.preventDefault()
-        fetch(`http://localhost:8081/post/${idPost}`, {
+        fetch(`http://localhost:8081/post/${idPost}`, {headers: { 'Content-Type': 'application/json', 'charset':'UTF-8' },
             method: "PUT",
             body: JSON.stringify({
                 title: event.target[0].value,

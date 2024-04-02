@@ -16,6 +16,7 @@ function AddComment({ arrOfComments, setArrOfComments, setAddScreen, user, post 
 
     function addCommentToDb(currentComment) {
         fetch(`http://localhost:8081/comments`, {
+            headers: { 'Content-Type': 'application/json', 'charset':'UTF-8' },
             method: 'POST',
             body: JSON.stringify({
                 postId: currentComment.postId,

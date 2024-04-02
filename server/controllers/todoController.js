@@ -72,7 +72,8 @@ export default class TodoController {
             console.log(req.body)
             const todoService = new TodoService();
             await todoService.updateTodo(req.body, req.params.id);
-            res.status(200).end(`Todo with id: ${req.params.id} updated succefuly`);
+            res.json(req.body)
+            // res.status(200).end(`Todo with id: ${req.params.id} updated succefuly`);
         }
         catch (ex) {
             return res.status(500).end(`${ex}`)

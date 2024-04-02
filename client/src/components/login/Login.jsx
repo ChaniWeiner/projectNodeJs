@@ -15,24 +15,33 @@ function Login() {
     }
 
     function getUserFromDb(username, password) {
+        console.log("The username: "+username)
         // ?username=${username}&pasword=${password}
         fetch(`http://localhost:8081/user?username=${username}`
         )
-            .then(response => response.json())
-            .then(data => chackIfExsits(data));
+            // .then(response => response.json())
+            .then(data => {console.log("data= "+data);
+            checkIfExsits(data, password)});
     }
 
-    function chackIfExsits(user_) {
-        console.log(user_)
+    function checkIfExsits(user_, password) {
+        console.log("user length: "+user_.length)
         if (user_.length == 0) {
             alert("user does not exist please sign up")
         } else {
-            //לאמת סיסמא נכונה
-            setUser(user_[0])
-            localStorage.setItem("user", (JSON.stringify({ userId: user_[0].id, username: user_[0].username })));
-            navigate(`/home/user/${parseInt((user_[0].id), 10)}`);
+            console.log("user: "+user_)
+            fetch(`http://localhost:8081/password/${user_[0].id}`)
+                .then(response => response.json())
+                .then(data => {console.log(data)
+                    data.password == password ? () => {
+                        setUser(user_[0])
+                        localStorage.setItem("user", (JSON.stringify({ userId: user_[0].id, username: user_[0].username })))
+                        navigate(`/home/user/${parseInt((user_[0].id), 10)}`);
+                    } : alert("user does not exist please sign up")
+                }
+            )}
         }
-    };
+    
 
     const {
         register,
@@ -52,22 +61,6 @@ function Login() {
                 {errors.password && errors.password.type === "required" && (
                     <p className="errorMsg">Password is required.</p>)}
             </form>
-
-            <button onClick={() => {
-                fetch(`http://localhost:8081/post`
-                    , {
-                        method: 'POST',
-                        body: JSON.stringify({
-                            id: 3,
-                            userId: 2,
-                            title: "kjhgf",
-                            body: "lkjhgkjh"
-                        })
-                    })
-                    // .then(response => response.json())
-                    .then(r => { console.log(r) })
-            }}
-            >click me</button>
 
             <button onClick={() => { navigate('/register') }} >sign up</button>
         </>)

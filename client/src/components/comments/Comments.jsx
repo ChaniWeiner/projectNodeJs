@@ -41,6 +41,7 @@ function Comments() {
         event.preventDefault()
         fetch(`http://localhost:8081/comment/${idComment}`, {
             method: "PUT",
+            headers: { 'Content-Type': 'application/json', 'charset':'UTF-8' },
             body: JSON.stringify({
                 name: event.target[0].value,
                 body: event.target[1].value

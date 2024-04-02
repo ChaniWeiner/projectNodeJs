@@ -28,6 +28,7 @@ export default class UsersController {
     
     async getUserByUsername(req, res, next) {
         try {
+            console.log("The username in query: "+req.query.username)
             const userService = new UserService();
             const data = await userService.getByUsername(req.query.username);
             return res.json(data);

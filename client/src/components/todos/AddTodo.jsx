@@ -17,7 +17,7 @@ function AddTodo({ arrOfTodos, setArrOfTodos, setAddScreen, setArrTodosToDisplay
         console.log(currentTodo);
         fetch(`http://localhost:8081/todo`,
             {
-                method: 'POST', headers: { 'Content-Type': 'application/json' },
+                method: 'POST', headers: { 'Content-Type': 'application/json', 'charset':'UTF-8' },
                 body: JSON.stringify({
                     id: currentTodo.id,
                     userId: currentTodo.userId,
