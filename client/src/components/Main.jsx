@@ -21,23 +21,23 @@ function Main() {
     useEffect(() => {
         const user = JSON.parse(localStorage.getItem("user"))
         user && fetch(`http://localhost:8081/user?username=${user.username}`)
-            .then(response =>
-                response.json())
-                .then(data => setUser(data[0]))
+            .then(response => response.json())
+            .then(data => setUser(data[0]))
     }, []);
 
 
-    return (
-        <>
+    return (<>
             <currentUserContext.Provider value={[user, setUser]}>
-
                 <Router>
                     <Routes>
+
                         <Route path="/" element={<Navigate to={"/login"} />} />
                         <Route path="login" element={<Login />} />
+
                         <Route path="register" element={<Register />} >
                             <Route path="details" element={<Register />} />
                         </Route>
+
                         <Route path="home/user/:id" element={<Home />} >
                             <Route path="info" element={<Info />} />
                             <Route path="todos" element={<TodosLayout />} >
@@ -48,12 +48,12 @@ function Main() {
                                 <Route path=":id/comments" element={<Comments />} />
                             </Route>
                         </Route>
+                        
                         <Route path="*" element={<NoPageFound />} />
                     </Routes>
                 </Router>
             </currentUserContext.Provider >
-
-        </>
-    )
+        </>)
 }
+
 export default Main

@@ -1,7 +1,8 @@
 .postStyle {
-    display: grid;
-    grid-template-columns: auto auto auto;
-  }
-  .postStyle div{
-    border: solid;
-  }
+  display: grid;
+  grid-template-columns: auto auto auto;
+}
+
+.postStyle div {
+  border: solid;
+}

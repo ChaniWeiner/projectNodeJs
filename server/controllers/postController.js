@@ -2,11 +2,18 @@ import { PostService } from '../service/postService.js'
 
 export default class PostController {
 
-    async getPost(req, res, next) {
+    async getPosts(req, res, next) {
         try {
             console.log("I'm here get")
+            console.log(req.query.userId)
             const postService = new PostService();
-            const data = await postService.getAllPost();
+            let data = []
+            if (req.query.userId === undefined) {
+                data = await postService.getAllPost();
+            }
+            else {
+                data = await postService.getByUserId(req.query.userId);
+            }
             return res.json(data);
         }
         catch (err) {

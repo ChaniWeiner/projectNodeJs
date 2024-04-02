@@ -21,7 +21,6 @@ function Todos() {
             .then(data => { setArrOfTodos(data); setArrTodosToDisplay(data) });
     }, [])
 
-
     function deleteTodo(dataId) {
         let filtered
         fetch(`http://localhost:8081/todo/${dataId}`, {
@@ -44,7 +43,7 @@ function Todos() {
                 completed: event.target[1].checked,
             }),
         })
-        .then(response => response.toString())
+            .then(response => response.toString())
             .then(filtered = arrOfTodos.filter(obj => {
                 return obj.id != idTodo
             })
@@ -61,8 +60,7 @@ function Todos() {
             then(setIndexOfTodo())
     }
 
-    return (
-        <>
+    return (<>
             <h3>Todos</h3>
             <button onClick={() => { addScreen == true ? setAddScreen(false) : setAddScreen(true) }}>add todo </button>
             {addScreen && <AddTodo arrOfTodos={arrOfTodos} setArrOfTodos={setArrOfTodos} setAddScreen={setAddScreen} setArrTodosToDisplay={setArrTodosToDisplay} user={user} />}
@@ -79,10 +77,10 @@ function Todos() {
                             <form onSubmit={() => updateTodo(event, todo.id, i)}>
                                 {indexOfTodo != i ? <h5>{todo.title}</h5> :
                                     <input type="text" defaultValue={todo.title} />}
-                                    
-                                <label htmlFor="todoComplete" >complete: 
-                                {indexOfTodo != i ? <input type="checkbox" checked={todo.completed ? true : false} id="todoComplete" onChange={() => { }} name="todoComplete"/>
-                                    : <input type="checkbox"/>}</label>
+
+                                <label htmlFor="todoComplete" >complete:
+                                    {indexOfTodo != i ? <input type="checkbox" checked={todo.completed ? true : false} id="todoComplete" onChange={() => { }} name="todoComplete" />
+                                        : <input type="checkbox" />}</label>
                                 {indexOfTodo == i && <button type='submit'>update</button>}
                             </form>
                             <br></br>
@@ -93,11 +91,7 @@ function Todos() {
                 }
                 )}</div>
             {arrTodosToDisplay.length == 0 && <span>no todos</span>}
-
-        </>
-    )
-
-
-
+        </>)
 }
+
 export default Todos

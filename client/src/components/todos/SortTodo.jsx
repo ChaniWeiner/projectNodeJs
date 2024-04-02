@@ -1,6 +1,5 @@
 import React from 'react';
 
-
 function SortTodo({ arrTodosToDisplay, setArrTodosToDisplay }) {
 
     function sortTaskById() {

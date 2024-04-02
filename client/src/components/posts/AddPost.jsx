@@ -1,13 +1,8 @@
-import React, { useEffect, useState, useRef } from 'react';
-import { AiFillDelete } from "react-icons/ai";
-import { RiEdit2Fill } from "react-icons/ri";
-import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom'
-import { json, useNavigate, useLocation } from "react-router-dom";
-import { currentUserContext } from '../Main'
+import React from 'react';
 
 function AddPost({ arrOfPosts, setArrOfPosts, setAddScreen, setArrPostsToDisplay, user }) {
 
-    function getGenralPostId(event) {
+    function createPost(event) {
         event.preventDefault();
         let post = {
             userId: user.id,
@@ -15,14 +10,11 @@ function AddPost({ arrOfPosts, setArrOfPosts, setAddScreen, setArrPostsToDisplay
             title: event.target[0].value,
             body: event.target[1].value,
         }
-        fetch(`http://localhost:8081/generalNumberOfEachItem/posts`).
-            then(response => (response.json()))
-            .then(data => addPostToDb(data, post))
-
+        addPostToDb(post)
     }
 
-    function addPostToDb(generalNumberOfPost, currentPost) {
-        currentPost.id = (JSON.parse(parseInt(generalNumberOfPost.postsGeneralNumber)) + 1).toString();
+    function addPostToDb(currentPost) {
+
         fetch(`http://localhost:8081/posts`, {
             method: 'POST',
             body: JSON.stringify({
@@ -33,26 +25,15 @@ function AddPost({ arrOfPosts, setArrOfPosts, setAddScreen, setArrPostsToDisplay
             })
         }).then(response => (response.json()))
             .then(() => {
-                alert("added ");
+                alert("Post added succefuly!");
                 setArrOfPosts([...arrOfPosts, currentPost]);
                 setArrPostsToDisplay([...arrOfPosts, currentPost])
+                setAddScreen(false)
             })
-        updateGeneralNumberOfPost(currentPost.id)
-    }
-
-
-    function updateGeneralNumberOfPost(number) {
-        fetch(`http://localhost:8081/generalNumberOfEachItem/posts`, {
-            method: "PATCH",
-            body: JSON.stringify({
-                postsGeneralNumber: number
-            }),
-        }).then(response => response.json()).then(setAddScreen(false)
-        );
     }
 
     return (<>
-        <div><form onSubmit={getGenralPostId}>
+        <div><form onSubmit={createPost}>
             <label >title:</label>
             <input type="text" />
             <label >body:</label>

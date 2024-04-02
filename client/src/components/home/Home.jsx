@@ -1,8 +1,7 @@
 import { BrowserRouter as Router, Route, Routes, Navigate, Outlet } from 'react-router-dom'
-import { json, useNavigate, } from "react-router-dom";
+import { json, useNavigate } from "react-router-dom";
 import { useContext } from 'react';
 import { currentUserContext } from '../Main'
-import { useLocation } from 'react-router-dom';
 import './home.css'
 
 
@@ -25,11 +24,12 @@ function Home() {
       <button onClick={() => { navigate(`./info`) }}>Info</button>
       <button onClick={() => { navigate(`./todos`) }}>Todos</button>
       <button onClick={() => { navigate(`./posts`) }}>Posts</button>
-      <button onClick={() => { navigate(`./albums`) }}>Albums</button>
+      {/* <button onClick={() => { navigate(`./albums`) }}>Albums</button> */}
       <button onClick={logout}>Logout</button>
       <Outlet />
     </>
   )
+
 }
 
 export default Home

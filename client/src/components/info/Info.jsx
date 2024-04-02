@@ -1,12 +1,10 @@
 import React from 'react';
-import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom'
-import { useLocation } from "react-router-dom";
 import { useContext } from 'react';
 import './info.css'
-import { json, useNavigate } from "react-router-dom";
 import { currentUserContext } from '../Main'
 
 function Info() {
+    
     const [user, setUser] = useContext(currentUserContext);
 
     return (

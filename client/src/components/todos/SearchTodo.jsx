@@ -1,8 +1,8 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { BiSearchAlt } from "react-icons/bi";
 
-
 function SearchTodo({ arrOfTodos, setArrTodosToDisplay }) {
+
     const searchValue = useRef(null);
     const [typeSearch, setTypeSearch] = useState("id")
 
@@ -46,24 +46,26 @@ function SearchTodo({ arrOfTodos, setArrTodosToDisplay }) {
             case "searchBytitle":
                 setTypeSearch("title")
                 break;
-            case "searchComplited":
+            case "searchCompleted":
                 setTypeSearch("complete")
                 break;
             default:
                 break;
         }
-        searchValue.current.value='';
+        searchValue.current.value = '';
     }
-    return (<>
-            <select onChange={searchTodos}>
-                <option value="searchByAll">all</option>
-                <option value="searchById">by id</option>
-                <option value="searchBytitle">by title</option>
-                <option value="searchComplited">completed</option>
-            </select>
 
-            <input  type="text" ref={searchValue} id='searchValue'  className="input" placeholder="🔍Search..." />
-            <button onClick={search}><BiSearchAlt /></button>
+    return (<>
+        <select onChange={searchTodos}>
+            <option value="searchByAll">all</option>
+            <option value="searchById">by id</option>
+            <option value="searchBytitle">by title</option>
+            <option value="searchCompleted">completed</option>
+        </select>
+
+        <input type="text" ref={searchValue} id='searchValue' className="input" placeholder="🔍Search..." />
+        <button onClick={search}><BiSearchAlt /></button>
     </>)
 }
+
 export default SearchTodo

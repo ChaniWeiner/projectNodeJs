@@ -6,6 +6,7 @@ import { useForm } from 'react-hook-form';
 import './login.css'
 
 function Login() {
+
     const [user, setUser] = useContext(currentUserContext);
     const navigate = useNavigate();
 
@@ -45,17 +46,17 @@ function Login() {
                 <h2>sign in</h2>
                 <input type='text' placeholder='username' {...register("username", { required: true })} />
                 <input type='password' placeholder='password' {...register("password", { required: true })} />
-
                 <input type="submit" value="sign in" />
                 {errors.username && errors.username.type === "required" && (
                     <p className="errorMsg">Username is required.</p>)}
                 {errors.password && errors.password.type === "required" && (
                     <p className="errorMsg">Password is required.</p>)}
             </form>
+
             <button onClick={() => {
                 fetch(`http://localhost:8081/post`
                     , {
-                        method: 'post',
+                        method: 'POST',
                         body: JSON.stringify({
                             id: 3,
                             userId: 2,
@@ -67,10 +68,9 @@ function Login() {
                     .then(r => { console.log(r) })
             }}
             >click me</button>
-            <button onClick={() => { navigate('/register') }} >sign up</button>
 
-        </>
-    )
+            <button onClick={() => { navigate('/register') }} >sign up</button>
+        </>)
 }
 
 export default Login

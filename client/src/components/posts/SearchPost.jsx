@@ -1,8 +1,8 @@
 import React, { useState, useRef } from 'react';
-import { useNavigate } from "react-router-dom";
 import { BiSearchAlt } from "react-icons/bi";
 
-function SearchPost({ arrOfPosts, setArrPostsToDisplay, arrOfAllPosts,showAllPosts}) {
+function SearchPost({ arrOfPosts, setArrPostsToDisplay}) {
+
     const [typeSearch, setTypeSearch] = useState("id")
     const searchValue = useRef(null);
 
@@ -24,6 +24,11 @@ function SearchPost({ arrOfPosts, setArrPostsToDisplay, arrOfAllPosts,showAllPos
                     return obj.title == value;
                 });
                 break;
+            case "user":
+                filtered = selectedArr.filter(obj => {
+                    return obj.userId == value;
+                });
+                break;
         }
         setArrPostsToDisplay(filtered)
     }
@@ -32,7 +37,8 @@ function SearchPost({ arrOfPosts, setArrPostsToDisplay, arrOfAllPosts,showAllPos
         event.preventDefault();
         switch (event.target.value) {
             case "searchByAll":
-                setTypeSearch("all")
+                setTypeSearch("all");
+                setArrPostsToDisplay(arrOfPosts)
                 break;
             case "searchById":
                 setTypeSearch("id")
@@ -40,24 +46,27 @@ function SearchPost({ arrOfPosts, setArrPostsToDisplay, arrOfAllPosts,showAllPos
             case "searchBytitle":
                 setTypeSearch("title")
                 break;
+            case "searchByUser":
+                setTypeSearch("user")
+                break;
             default:
                 break;
         }
-        searchValue.current.value='';
-
+        searchValue.current.value = '';
     }
+    
     return (<>
-
         <div>
             <select onChange={searchPost}>
                 <option value="searchByAll">all</option>
-                <option value="searchById">by id</option>
+                <option value="searchById">by post id</option>
                 <option value="searchBytitle">by title</option>
+                <option value="searchByUser">by user id</option>
             </select>
-
             <input type="text" ref={searchValue} id='searchValue' className="input" placeholder="🔍Search... "></input>
-            <button onClick={()=>search(showAllPosts==true?arrOfAllPosts:arrOfPosts)}><BiSearchAlt /></button>
+            <button onClick={() => search(arrOfPosts)}><BiSearchAlt /></button>
         </div>
     </>)
 }
+
 export default SearchPost

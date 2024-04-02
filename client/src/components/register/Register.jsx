@@ -1,4 +1,3 @@
-import react from "react";
 import React, { useEffect, useState, useContext } from 'react';
 import { currentUserContext } from '../Main'
 import { useNavigate } from "react-router-dom";
@@ -31,7 +30,7 @@ function Register() {
                 email: data.email,
                 address: {
                     street: data.street,
-                    suite:data.suit,
+                    suite: data.suit,
                     city: data.city,
                     zipcode: data.zipcode,
                     geo: {
@@ -43,8 +42,8 @@ function Register() {
                 website: userIdentificationInformation.website,
                 company: {
                     name: data.name,
-                    catchPhrase:  data.catchPhrase,
-                    bs:  data.bs
+                    catchPhrase: data.catchPhrase,
+                    bs: data.bs
 
                 }
             })
@@ -75,7 +74,7 @@ function Register() {
     const signUp = (data) => {
         let username = data.username;
         let password = data.password;
-        let verifyPassword =data.verifyPassword;
+        let verifyPassword = data.verifyPassword;
         if (password != verifyPassword)
             alert("The passwords do not match")
         else {
@@ -104,85 +103,47 @@ function Register() {
     return (
         <>
             <h3>Register</h3>
-            {isExtendedDetailsOpen && <div> <form onSubmit={handleSubmit(signUp)} >
-                <input type='text' placeholder='username' {...register("username", { required: true })} />
-                {errors.usernam && errors.username.type === "required" && (<p className="errorMsg">Username is required.</p>)}
-                <input type='password' placeholder='password'  {...register("password", { required: true })} />
-                {errors.password && errors.password.type === "required" && (<p className="errorMsg">Password is required.</p>)}
-                <input type='password' placeholder='verify-password'  {...register("verifyPassword", { required: true })} />
-                {errors.verifyPassword && errors.verifyPassword.type === "required" && (<p className="errorMsg">Verify-password is required.</p>)}
-                <input type="submit" value="sign up" />
-            </form>
-                <button onClick={() => { navigate('/login') }} >sign in</button></div>
-            }
-
-            {
-                !isExtendedDetailsOpen && <form onSubmit={handleSubmit(filInExtendedDetails)}>
-
-                    <input type='text' placeholder='name'  {...register("name", { required: true })} />
-                    {errors.name && errors.name.type === "required" && (<p className="errorMsg">Name is required.</p>)}
-                    <br />
-                    <input type='email' placeholder='email' {...register("email", {
-                        required: true,
-                        pattern: /^[^@ ]+@[^@ ]+\.[^@ .]{2,}$/
-                    })} />
-                    {errors.email && errors.email.type === "required" && (
-                        <p className="errorMsg">Email is required.</p>
-                    )}
-                    {errors.email && errors.email.type === "pattern" && (
-                        <p className="errorMsg">Email is not valid.</p>
-                    )}
-                    <br />
-
-                    <label htmlFor="address">address</label><br />
-                    <input type='text' name="address" placeholder='street' {...register("street", { required: true })} />
-                    {errors.street && errors.street.type === "required" && (<p className="errorMsg">Street is required.</p>)}
-                    <br />
-
-                    <input type='text' name="address" placeholder='suit'  {...register("suit", { required: true })} />
-                    {errors.suit && errors.suit.type === "required" && (<p className="errorMsg">Suit is required.</p>)}
-                    <br />
-                    <input type='text' name="address" placeholder='city' {...register("city", { required: true })} />
-                    {errors.city && errors.city.type === "required" && (<p className="errorMsg">City is required.</p>)}
-                    <br />
-                    <input type='text' name="address" placeholder='zipcode'  {...register("zipcode", { required: true , pattern: /^[0-9]+$/ })} />
-                    {errors.zipcode && errors.zipcode.type === "required" && (<p className="errorMsg">Zipcode is required.</p>)}
-                    {errors.zipcode && errors.zipcode.type === "pattern" && (<p className="errorMsg">Zipecode is not valid.</p>)}
-                    <br />
-
-                    <label htmlFor="geo">geo</label><br />
-                    <input type='text' name="geo" placeholder='lat' {...register("lat", { required: true })} />
-                    {errors.lat && errors.lat.type === "required" && (<p className="errorMsg">Lat is required.</p>)}
-                    <br />
-                    <input type='text' name="geo" placeholder='lng'  {...register("lng", { required: true })} />
-                    {errors.lng && errors.lng.type === "required" && (<p className="errorMsg">Lng is required.</p>)}
-                    <br />
-                    <br />
-                    <input type='tel' placeholder='phone'  {...register("phone", { required: true, pattern: /^[0-9]+$/ ,minLength:9,maxLength:10 })} />
-                    {errors.phone && errors.phone.type === "required" && (<p className="errorMsg">Phone is required.</p>)}
-                    {errors.phone && errors.phone.type === "pattern" && (<p className="errorMsg">Phone should include only numbers.</p>)}
-                    {errors.phone && errors.phone.type === "minLength" && (<p className="errorMsg">Phone should be at-least 9 characters.</p>)}
-                    {errors.phone && errors.phone.type === "maxLength" && (<p className="errorMsg">Phone should be not-more 9 characters.</p>)}
-
-                    <br />
-
-                    <label htmlFor="company">company</label><br />
-                    <input type='text' name="company" placeholder='componyName' {...register("componyName", { required: true })} />
-                    {errors.componyName && errors.componyName.type === "required" && (<p className="errorMsg">ComponyName is required.</p>)}
-                    <br />
-                    <input type='text' name="company" placeholder='catchPhrase'  {...register("catchPhrase", { required: true })} />
-                    {errors.catchPhrase && errors.catchPhrase.type === "required" && (<p className="errorMsg">CatchPhrase is required.</p>)}
-                    <br />
-                    <input type='text' name="company" placeholder='bs'  {...register("bs", { required: true })} /><br />
-                    {errors.bs && errors.bs.type === "required" && (<p className="errorMsg">Bs is required.</p>)}
-
-                    <input type="submit" value="register" />
+            {isExtendedDetailsOpen && <div>
+                <form onSubmit={handleSubmit(signUp)} >
+                    <input type='text' placeholder='username' {...register("username", { required: true })} />
+                    {errors.usernam && errors.username.type === "required" && (<p className="errorMsg">Username is required.</p>)}
+                    <input type='password' placeholder='password'  {...register("password", { required: true })} />
+                    {errors.password && errors.password.type === "required" && (<p className="errorMsg">Password is required.</p>)}
+                    <input type='password' placeholder='verify-password'  {...register("verifyPassword", { required: true })} />
+                    {errors.verifyPassword && errors.verifyPassword.type === "required" && (<p className="errorMsg">Verify-password is required.</p>)}
+                    <input type="submit" value="sign up" />
                 </form>
+                <button onClick={() => { navigate('/login') }} >sign in</button>
+            </div>}
 
-            }
+            {!isExtendedDetailsOpen && <form onSubmit={handleSubmit(filInExtendedDetails)}>
 
-        </>
-    )
+                <input type='text' placeholder='name'  {...register("name", { required: true })} />
+                {errors.name && errors.name.type === "required" && (<p className="errorMsg">Name is required.</p>)}
+                <br />
+                <input type='email' placeholder='email' {...register("email", {
+                    required: true,
+                    pattern: /^[^@ ]+@[^@ ]+\.[^@ .]{2,}$/
+                })} />
+                {errors.email && errors.email.type === "required" && (
+                    <p className="errorMsg">Email is required.</p>
+                )}
+                {errors.email && errors.email.type === "pattern" && (
+                    <p className="errorMsg">Email is not valid.</p>
+                )}
+                <br />
+
+                <input type='tel' placeholder='phone'  {...register("phone", { required: true, pattern: /^[0-9]+$/, minLength: 9, maxLength: 10 })} />
+                {errors.phone && errors.phone.type === "required" && (<p className="errorMsg">Phone is required.</p>)}
+                {errors.phone && errors.phone.type === "pattern" && (<p className="errorMsg">Phone should include only numbers.</p>)}
+                {errors.phone && errors.phone.type === "minLength" && (<p className="errorMsg">Phone should be at-least 9 characters.</p>)}
+                {errors.phone && errors.phone.type === "maxLength" && (<p className="errorMsg">Phone should be not-more 9 characters.</p>)}
+
+                <br />
+
+                <input type="submit" value="register" />
+            </form> }
+        </>)
 }
 
 export default Register
