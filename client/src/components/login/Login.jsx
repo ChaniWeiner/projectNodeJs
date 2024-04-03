@@ -19,7 +19,7 @@ function Login() {
         // ?username=${username}&pasword=${password}
         fetch(`http://localhost:8081/user?username=${username}`
         )
-            // .then(response => response.json())
+            .then(response => response.json())
             .then(data => {console.log("data= "+data);
             checkIfExsits(data, password)});
     }
@@ -30,14 +30,14 @@ function Login() {
             alert("user does not exist please sign up")
         } else {
             console.log("user: "+user_)
-            fetch(`http://localhost:8081/password/${user_[0].id}`)
+            fetch(`http://localhost:8081/password/${user_.id}`)
                 .then(response => response.json())
-                .then(data => {console.log(data)
-                    data.password == password ? () => {
-                        setUser(user_[0])
-                        localStorage.setItem("user", (JSON.stringify({ userId: user_[0].id, username: user_[0].username })))
-                        navigate(`/home/user/${parseInt((user_[0].id), 10)}`);
-                    } : alert("user does not exist please sign up")
+                .then(data => {console.log(data[0]);console.log("paswword= "+password+" dadt[0].pswd= "+data[0].password)
+                   if( data[0].password == password )  {
+                        setUser(user_)
+                        localStorage.setItem("user", (JSON.stringify({ userId: user_.id, username: user_.username })))
+                        navigate(`/home/user/${parseInt((user_.id), 10)}`);
+                    } else alert("user does not exist please sign up")
                 }
             )}
         }
