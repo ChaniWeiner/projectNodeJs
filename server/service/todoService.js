@@ -16,6 +16,7 @@ export class TodoService {
     }
     async addTodo(todo) {
         const result = await executeQuery('INSERT INTO `db_cs`.`todos` (`id`, `userId`, `title`, `completed`) VALUES (?, ?, ?, ?)', [null, todo.userId, todo.title, todo.completed]);
+        console.log("result todo: "+result.insertId)
         return result;
     }
     async deleteTodo(id) {

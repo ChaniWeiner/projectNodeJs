@@ -40,8 +40,9 @@ export default class TodoController {
         try {
             console.log(req.body)
             const todoService = new TodoService();
-            await todoService.addTodo(req.body);
-            res.status(200).end(`Todo added succefuly`);
+            let id=await todoService.addTodo(req.body);
+            console.log(id.insertId)
+            return res.end(`id: ${id.insertId}`);
         }
         catch (ex) {
             console.log(ex)

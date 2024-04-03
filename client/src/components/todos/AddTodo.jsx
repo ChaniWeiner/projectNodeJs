@@ -25,8 +25,11 @@ function AddTodo({ arrOfTodos, setArrOfTodos, setAddScreen, setArrTodosToDisplay
                     completed: currentTodo.completed
                 })
             })
-            .then(() => {
+            // .then(data=>data.json())
+            .then((response) => {
                 alert("Todo added succefuly!");
+                // console.log(response+" "+response.status+" "+response.statusText+" "+response[0])
+                // currentTodo.id=response.insertId
                 setArrTodosToDisplay([...arrOfTodos, currentTodo]);
                 setArrOfTodos([...arrOfTodos, currentTodo]);
                 setAddScreen(false);
