@@ -24,9 +24,10 @@ function AddPost({ arrOfPosts, setArrOfPosts, setAddScreen, setArrPostsToDisplay
                 body: currentPost.body
             })
         })
-        // .then(response => (response.json()))
-            .then(() => {
+        .then(response => (response.json()))
+            .then((response) => {
                 alert("Post added succefuly!");
+                currentPost.id=response["id"]
                 setArrOfPosts([...arrOfPosts, currentPost]);
                 setArrPostsToDisplay([...arrOfPosts, currentPost])
                 setAddScreen(false)

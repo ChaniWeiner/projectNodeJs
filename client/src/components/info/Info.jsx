@@ -15,6 +15,7 @@ function Info() {
                 <h6>username: {user.username}</h6>
                 <h6>phone: {user.phone}</h6>
                 <h6>email: {user.email}</h6>
+                
             </div>
         </>
     )

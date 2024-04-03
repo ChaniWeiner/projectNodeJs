@@ -54,7 +54,7 @@ function Comments() {
             .then(filtered = arrOfComments.filter(obj => {
                 return obj.id != idComment
             })
-            ).then(data => setArrOfComments((prev) => {console.log("updated data: "+data.name)
+            ).then(data => setArrOfComments((prev) => {console.log("updated data: "+data )
                 const tempArrOfComments = [
                     ...prev.slice(0, i),
                     data,

@@ -41,8 +41,8 @@ export default class CommentController {
     async addComment(req, res) {
         try {
             const commentService = new CommentService();
-            await commentService.addComment(req.body);
-            res.status(200).end(`Comment added succefuly`);
+            let result=await commentService.addComment(req.body);
+            return res.status(201).json({id: result.insertId});
         }
         catch (ex) {
             return res.status(500).end(`${ex}`)
@@ -72,7 +72,7 @@ export default class CommentController {
             const commentService = new CommentService();
             console.log("in controller: "+req.params.id+" body: "+req.body.name)
             await commentService.updateComment(req.body, req.params.id);
-            res.status(200).end(`Comment with id: ${req.params.id} updated succefuly`);
+            return res.status(201).json({body: req.body});
         }
         catch (ex) {
             return res.status(500).end(`${ex}`)

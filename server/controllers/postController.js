@@ -49,8 +49,8 @@ export default class PostController {
         try {
             console.log("I'm here add")
             const postService = new PostService();
-            await postService.addPost(req.body);
-            res.status(200).end(`Post added succefuly`);
+            let result= await postService.addPost(req.body);
+            return res.status(201).json({id: result.insertId});
         }
         catch (ex) {
             return res.status(500).end(`${ex}`)

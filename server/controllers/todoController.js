@@ -40,9 +40,8 @@ export default class TodoController {
         try {
             console.log(req.body)
             const todoService = new TodoService();
-            let id=await todoService.addTodo(req.body);
-            console.log(id.insertId)
-            return res.end(`id: ${id.insertId}`);
+            let result=await todoService.addTodo(req.body);
+            return res.status(201).json({id: result.insertId});
         }
         catch (ex) {
             console.log(ex)
@@ -73,7 +72,7 @@ export default class TodoController {
             console.log(req.body)
             const todoService = new TodoService();
             await todoService.updateTodo(req.body, req.params.id);
-            res.json(req.body)
+            return res.json(req.body)
             // res.status(200).end(`Todo with id: ${req.params.id} updated succefuly`);
         }
         catch (ex) {
