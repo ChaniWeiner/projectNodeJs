@@ -15,33 +15,47 @@ function Login() {
     }
 
     function getUserFromDb(username, password) {
-        console.log("The username: "+username)
-        // ?username=${username}&pasword=${password}
-        fetch(`http://localhost:8081/user?username=${username}`
-        )
-            .then(response => response.json())
-            .then(data => {console.log("data= "+data);
-            checkIfExsits(data, password)});
+        console.log("The username: " + username)
+        fetch(`http://localhost:8081/user?username=${username}`)
+            .then(response => {
+                if (response.status == 200)
+                    return response.json();
+                else
+                    alert("user does not exist please sign up");
+            })
+            .then(data => {
+                if (data != undefined)
+                    checkIfExsits(data, password);
+            })
     }
 
+
     function checkIfExsits(user_, password) {
-        console.log("user length: "+user_.length)
-        if (user_.length == 0) {
+        console.log("user length: " + user_)
+        if (user_ == null) {
             alert("user does not exist please sign up")
         } else {
-            console.log("user: "+user_)
-            fetch(`http://localhost:8081/password/${user_.id}`)
-                .then(response => response.json())
-                .then(data => {console.log(data[0]);console.log("paswword= "+password+" dadt[0].pswd= "+data[0].password)
-                   if( data[0].password == password )  {
+            console.log("user: " + user_)
+            fetch(`http://localhost:8081/password`,
+                {
+                    headers: { 'Content-Type': 'application/json', 'charset': 'UTF-8' },
+                    method: 'POST',
+                    body: JSON.stringify({
+                        userId: user_.id,
+                        password: password
+                    })
+                })
+                .then(data => {
+                    console.log("data: " + data.status)
+                    if (data.status == 200) {
                         setUser(user_)
                         localStorage.setItem("user", (JSON.stringify({ userId: user_.id, username: user_.username })))
                         navigate(`/home/user/${parseInt((user_.id), 10)}`);
                     } else alert("user does not exist please sign up")
-                }
-            )}
+                })
         }
-    
+    }
+
 
     const {
         register,

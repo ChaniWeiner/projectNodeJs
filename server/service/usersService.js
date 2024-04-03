@@ -11,7 +11,7 @@ export class UserService {
         return result;
     }
     async getByUsername(username) {
-        console.log("Hi I am in service " + username + typeof username)
+        console.log("Hi I am in service " + username + " "+typeof username)
         const result = await executeQuery(`select * from \`db_cs\`.\`users\` where username='${username}'`);
         // console.log("result: " + result.username)
         console.log("result[0].username: " + result[0].username)

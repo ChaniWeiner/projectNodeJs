@@ -14,8 +14,7 @@ function AddPost({ arrOfPosts, setArrOfPosts, setAddScreen, setArrPostsToDisplay
     }
 
     function addPostToDb(currentPost) {
-
-        fetch(`http://localhost:8081/posts`, {
+        fetch(`http://localhost:8081/post`, {
             headers: { 'Content-Type': 'application/json', 'charset':'UTF-8' },
             method: 'POST',
             body: JSON.stringify({
@@ -24,13 +23,14 @@ function AddPost({ arrOfPosts, setArrOfPosts, setAddScreen, setArrPostsToDisplay
                 title: currentPost.title,
                 body: currentPost.body
             })
-        }).then(response => (response.json()))
+        })
+        // .then(response => (response.json()))
             .then(() => {
                 alert("Post added succefuly!");
                 setArrOfPosts([...arrOfPosts, currentPost]);
                 setArrPostsToDisplay([...arrOfPosts, currentPost])
                 setAddScreen(false)
-            })
+            }).catch(ex=>console.log(ex))
     }
 
     return (<>

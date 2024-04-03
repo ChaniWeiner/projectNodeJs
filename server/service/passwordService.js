@@ -10,7 +10,7 @@ export class PasswordService {
         const result = await executeQuery('select * from `db_cs`.`passwords` where userId=?', [id]);
         return result;
     }
-    async getByPasswordname(passwordname){
+    async getByPasswordname(passwordname) {
         const result = await executeQuery('select * from `db_cs`.`passwords` where passwordname=?', [passwordname]);
         return result;
     }
@@ -19,12 +19,16 @@ export class PasswordService {
         const result = await executeQuery('INSERT INTO `db_cs`.`passwords` (`id`, `name`, `passwordname`, `phone`, `email`) VALUES (?, ?, ?, ?, ?)', [password.id, password.name, password.passwordname, password.phone, password.email]);
         return result;
     }
+    async loginVerify(user) {
+        const result = await executeQuery('select * from `db_cs`.`passwords` where userId=? && password=?', [user.userId, user.password]);
+        return result;
+    }
     async deletePassword(id) {
         const result = await executeQuery('DELETE from `db_cs`.`passwords` where id=?', [id]);
         return result;
     }
-    async updatePassword(password,id) {
-        const result = await executeQuery('UPDATE `db_cs`.`passwords` SET `name`=?, `passwordname` = ?,`phone`=?,`email`=? WHERE (`id` = ?)',[password.name, password.passwordname, password.phone, password.email,id]);
+    async updatePassword(password, id) {
+        const result = await executeQuery('UPDATE `db_cs`.`passwords` SET `name`=?, `passwordname` = ?,`phone`=?,`email`=? WHERE (`id` = ?)', [password.name, password.passwordname, password.phone, password.email, id]);
         return result;
     }
 }

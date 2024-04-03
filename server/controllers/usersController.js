@@ -21,7 +21,8 @@ export default class UsersController {
             return res.json(data);
         }
         catch (err) {
-            return res.status(404).end(`${err}`)
+            console.log(err)
+            return res.status(500).end(`${err}`)
         }
 
     }
@@ -31,6 +32,10 @@ export default class UsersController {
             console.log("The username in query: "+req.query.username)
             const userService = new UserService();
             const data = await userService.getByUsername(req.query.username);
+            if(data==null){
+                return res.status(500).end("user not found");
+            }
+            console.log("ggggg "+data.name)
             return res.json(data);
         }
         catch (err) {

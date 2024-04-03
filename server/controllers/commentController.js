@@ -70,7 +70,8 @@ export default class CommentController {
     async updateComment(req, res) {
         try {
             const commentService = new CommentService();
-            await commentService.updatecomment(req.body, req.params.id);
+            console.log("in controller: "+req.params.id+" body: "+req.body.name)
+            await commentService.updateComment(req.body, req.params.id);
             res.status(200).end(`Comment with id: ${req.params.id} updated succefuly`);
         }
         catch (ex) {

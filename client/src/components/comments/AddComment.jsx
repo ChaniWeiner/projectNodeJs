@@ -15,7 +15,7 @@ function AddComment({ arrOfComments, setArrOfComments, setAddScreen, user, post 
     }
 
     function addCommentToDb(currentComment) {
-        fetch(`http://localhost:8081/comments`, {
+        fetch(`http://localhost:8081/comment`, {
             headers: { 'Content-Type': 'application/json', 'charset':'UTF-8' },
             method: 'POST',
             body: JSON.stringify({
@@ -25,7 +25,8 @@ function AddComment({ arrOfComments, setArrOfComments, setAddScreen, user, post 
                 email: currentComment.email,
                 body: currentComment.body
             })
-        }).then(response => (response.json()))
+        })
+        // .then(response => (response.json()))
             .then(() => {
                 alert("comment added succefuly!");
                 setArrOfComments([...arrOfComments, currentComment]);

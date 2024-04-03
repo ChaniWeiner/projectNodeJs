@@ -23,7 +23,8 @@ export class CommentService {
         return result;
     }
     async updateComment(comment,id) {
-        const result = await executeQuery('UPDATE `db_cs`.`comments` SET `name` = ?, `email` = ?,`body`=? WHERE (`id` = ?)',[ comment.name,comment.email, comment.body,id]);
+        console.log("in service: "+id+" comment: "+comment.name)
+        const result = await executeQuery('UPDATE `db_cs`.`comments` SET `name` = ?,`body`=? WHERE (`id` = ?)',[ comment.name, comment.body,id]);
         return result;
     }
 }

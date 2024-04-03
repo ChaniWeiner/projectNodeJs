@@ -44,7 +44,7 @@ function Todos() {
                 title: event.target[0].value,
                 completed: event.target[1].checked,
             })})
-            .then(response => response.json())
+            .then(response => {response.json();})
             .then(filtered = arrOfTodos.filter(obj => {
                 return obj.id != todo.id
             }))

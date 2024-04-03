@@ -26,7 +26,7 @@ export default class PasswordController {
             return res.status(404).end(`${err}`)
         }
     }
-    
+
     async getPasswordByPasswordname(req, res, next) {
         try {
             const passwordService = new PasswordService();
@@ -40,9 +40,16 @@ export default class PasswordController {
 
     async addPassword(req, res) {
         try {
+            console.log("pswd req.body= "+req.body.password+" "+req.body.userId+" "+req.body)
             const passwordService = new PasswordService();
-            await passwordService.addPassword(req.body);
-            res.status(200).end(`password with id: ${req.body.id} added succefuly`);
+            let response = await passwordService.loginVerify(req.body);
+            if (response[0].userId != req.body.userId) {
+                console.log("hey hop error in controller")
+                return res.status(500).end("user not found")
+            }
+            else {
+                return res.status(200).end(`user found!`);
+            }
         }
         catch (ex) {
             return res.status(500).end(`${ex}`)
