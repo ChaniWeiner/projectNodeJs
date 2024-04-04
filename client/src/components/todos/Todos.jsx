@@ -47,12 +47,13 @@ function Todos() {
                 completed: event.target[1].checked,
             })
         })
-            .then(response =>  response.json())
-            .then(data=>{filtered = arrOfTodos.filter(obj => {
-                return obj.id != todo.id
+            .then(response => response.json())
+            .then(data => {
+                filtered = arrOfTodos.filter(obj => {
+                    return obj.id != todo.id
+                })
+                return data["data"]
             })
-            return data["data"]
-        })
             .then(data => setArrTodosToDisplay((prev) => {
                 const tempArrOfTodos = [
                     ...prev.slice(0, i),
@@ -65,6 +66,27 @@ function Todos() {
             then(setIndexOfTodo())
     }
 
+    function todoDisplay() {
+        return <div className='todoStyle'>
+            {arrTodosToDisplay.map((todo, i) => {
+                return (
+                    <div key={i} id={i + 1}> <h4>Id todo: {todo.id}</h4>
+                        <form onSubmit={() => updateTodo(event, todo, i)}>
+                            {indexOfTodo != i ? <h5>{todo.title}</h5> :
+                                <input type="text" defaultValue={todo.title} />}
+                            <label htmlFor="todoComplete" >complete:
+                                {indexOfTodo != i ? <input type="checkbox" checked={todo.completed ? true : false} id="todoComplete" onChange={() => { }} name="todoComplete" />
+                                    : <input type="checkbox" />}</label>
+                            {indexOfTodo == i && <button type='submit'>update</button>}
+                        </form>
+                        <br></br>
+                        <button disabled={indexOfTodo == i} onClick={() => deleteTodo(todo.id)}><AiFillDelete /></button>
+                        <button onClick={() => { indexOfTodo == i ? setIndexOfTodo(-1) : setIndexOfTodo(i) }}><RiEdit2Fill /></button>
+                    </div>)
+            })}
+        </div>
+    }
+
     return (<>
         <h3>Todos</h3>
         <button onClick={() => { addScreen == true ? setAddScreen(false) : setAddScreen(true) }}>add todo </button>
@@ -75,26 +97,7 @@ function Todos() {
         <br />
         <label>sort by:  </label>
         {<SortTodo arrTodosToDisplay={arrTodosToDisplay} setArrTodosToDisplay={setArrTodosToDisplay} />}
-        <div className='todoStyle'>
-            {arrTodosToDisplay.map((todo, i) => {
-                return (
-                    <div key={i} id={i + 1}> <h4>Id todo: {todo.id}</h4>
-                        <form onSubmit={() => updateTodo(event, todo, i)}>
-                            {indexOfTodo != i ? <h5>{todo.title}</h5> :
-                                <input type="text" defaultValue={todo.title} />}
-
-                            <label htmlFor="todoComplete" >complete:
-                                {indexOfTodo != i ? <input type="checkbox" checked={todo.completed ? true : false} id="todoComplete" onChange={() => { }} name="todoComplete" />
-                                    : <input type="checkbox" />}</label>
-                            {indexOfTodo == i && <button type='submit'>update</button>}
-                        </form>
-                        <br></br>
-                        <button disabled={indexOfTodo == i} onClick={() => deleteTodo(todo.id)}><AiFillDelete /></button>
-                        <button onClick={() => { indexOfTodo == i ? setIndexOfTodo(-1) : setIndexOfTodo(i) }}><RiEdit2Fill /></button>
-                    </div>
-                )
-            }
-            )}</div>
+        {todoDisplay()}
         {arrTodosToDisplay.length == 0 && <span>no todos</span>}
     </>)
 }

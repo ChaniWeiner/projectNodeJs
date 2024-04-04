@@ -55,7 +55,7 @@ function Comments() {
             .then(data => {
                 filtered = arrOfComments.filter(obj => {
                     return obj.id != comment.id
-                }); 
+                });
                 return data["data"]
             })
             .then(data => setArrOfComments((prev) => {
@@ -69,6 +69,23 @@ function Comments() {
             })).then(setIndexOfComment()).catch(ex => console.log(ex))
     }
 
+    function commentsDisplay() {
+        return arrOfComments.map((comment, i) => {
+            return (
+                <div key={i}>
+                    <form onSubmit={() => updateComment(event, comment, i)}>
+                        {indexOfComment != i ? <p>{1 + i + ". name: " + comment.name}</p> : <input type="text" defaultValue={comment.name} />}
+                        <p>{"email: " + comment.email}</p>
+                        {indexOfComment != i ? <p>{"body: " + comment.body}</p> : <input type="text" defaultValue={comment.body} />}
+                        {indexOfComment == i && <button type='submit'>update</button>}
+                    </form>
+                    {comment.email == user.email && <button disabled={indexOfComment == i} onClick={() => deleteComment(comment.id)} ><AiFillDelete /></button>}
+                    {comment.email == user.email && <button onClick={() => { indexOfComment == i ? setIndexOfComment(-1) : setIndexOfComment(i) }}><RiEdit2Fill /></button>}
+                    <br></br>
+                </div>)
+        })
+    }
+
     return (
         <>
             <h2>post number: {post.id}</h2>
@@ -77,21 +94,7 @@ function Comments() {
             <h3>comments</h3>
             <button onClick={() => addScreen == true ? setAddScreen(false) : setAddScreen(true)}>add comment</button>
             {addScreen && <AddComment arrOfComments={arrOfComments} setArrOfComments={setArrOfComments} setAddScreen={setAddScreen} post={post} user={user} />}
-            {arrOfComments.map((comment, i) => {
-                return (
-                    <div key={i}>
-                        {/* {console.log("The comment: "+comment)} */}
-                        <form onSubmit={() => updateComment(event, comment, i)}>
-                            {indexOfComment != i ? <p>{1 + i + ". name: " + comment.name}</p> : <input type="text" defaultValue={comment.name} />}
-                            <p>{"email: " + comment.email}</p>
-                            {indexOfComment != i ? <p>{"body: " + comment.body}</p> : <input type="text" defaultValue={comment.body} />}
-                            {indexOfComment == i && <button type='submit'>update</button>}
-                        </form>
-                        {comment.email == user.email && <button disabled={indexOfComment == i} onClick={() => deleteComment(comment.id)} ><AiFillDelete /></button>}
-                        {comment.email == user.email && <button onClick={() => { indexOfComment == i ? setIndexOfComment(-1) : setIndexOfComment(i) }}><RiEdit2Fill /></button>}
-                        <br></br>
-                    </div>)
-            })}
+            {commentsDisplay()}
         </>
     )
 }

@@ -23,7 +23,7 @@ function Posts() {
     useEffect(() => {
         fetch(`http://localhost:8081/post`)
             .then(response => (response.json()))
-            .then(data => {console.log(data);setArrOfPosts(data); setArrPostsToDisplay(data)});
+            .then(data => { console.log(data); setArrOfPosts(data); setArrPostsToDisplay(data) });
     }, [])
 
     function deletePost(dataId, userId) {
@@ -54,9 +54,7 @@ function Posts() {
             })
             .then(response => response.json())
             .then(data => {
-                filtered = arrOfPosts.filter(obj => {
-                    return obj.id != post.id
-                });
+                filtered = arrOfPosts.filter(obj => { return obj.id != post.id });
                 return data["data"]
             })
             .then(data => setArrPostsToDisplay((prev) => {
@@ -70,35 +68,39 @@ function Posts() {
             .then(setArrOfPosts(arrPostsToDisplay)).then(setIndexOfPost())
     }
 
+    function postsDisplay() {
+        return <div className='postStyle'>
+            {arrPostsToDisplay.map((post, i) => {
+                return (
+                    <div key={i} id={i}>
+                        <h4>post number: {post.id}</h4>
+                        <h5>author id: {post.userId}</h5>
+                        <form onSubmit={() => updatePost(event, post, i)}>
+                            {indexOfPost != i ? null : <label>title:</label>}
+                            {indexOfPost != i ? showBody == i ? <p style={style}>title: {post.title}</p> : <p >title: {post.title}</p>
+                                : <input type="text" defaultValue={post.title} />}
+                            {indexOfPost != i ? null : <label>body:</label>}
+                            {indexOfPost != i ? showBody == i && <p>{post.body}</p>
+                                : <input type="text" defaultValue={post.body} />}
+                            {indexOfPost == i && <button type='submit'>update</button>}
+                        </form>
+                        <button onClick={() => showBody === i ? setShowBody(-1) : setShowBody(i)}><MdOutlineExpandMore /></button>
+                        {showBody == i && post.userId == user.id && <button onClick={() => { indexOfPost == i ? setIndexOfPost(-1) : setIndexOfPost(i) }}><RiEdit2Fill /></button>}
+                        <br />
+                        {showBody == i && <button onClick={() => { navigate(`./${post.id}/comments`, { state: post }) }}>comments</button>}
+                        {post.userId == user.id && <button disabled={indexOfPost == i} onClick={() => deletePost(post.id, post.userId)}><AiFillDelete /></button>}
+                    </div>
+                )
+            })}</div>
+    }
+
     return (
         <>
             <h3>Posts</h3>
             <button onClick={() => addScreen == true ? setAddScreen(false) : setAddScreen(true)}>add post</button>
             {addScreen && <AddPost arrOfPosts={arrOfPosts} setArrOfPosts={setArrOfPosts} setAddScreen={setAddScreen} setArrPostsToDisplay={setArrPostsToDisplay} user={user} />}
             {<SearchPost arrOfPosts={arrOfPosts} setArrPostsToDisplay={setArrPostsToDisplay} />}
-            <div className='postStyle'>
-                {arrPostsToDisplay.map((post, i) => {
-                    return (
-                        <div key={i} id={i}>
-                            <h4>post number: {post.id}</h4>
-                            <h5>author id: {post.userId}</h5>
-                            <form onSubmit={() => updatePost(event, post, i)}>
-                                {indexOfPost != i ? null : <label>title:</label>}
-                                {indexOfPost != i ? showBody == i ? <p style={style}>title: {post.title}</p> : <p >title: {post.title}</p>
-                                    : <input type="text" defaultValue={post.title} />}
-                                {indexOfPost != i ? null : <label>body:</label>}
-                                {indexOfPost != i ? showBody == i && <p>{post.body}</p>
-                                    : <input type="text" defaultValue={post.body} />}
-                                {indexOfPost == i && <button type='submit'>update</button>}
-                            </form>
-                            <button onClick={() => showBody === i ? setShowBody(-1) : setShowBody(i)}><MdOutlineExpandMore /></button>
-                            {showBody == i && post.userId == user.id && <button onClick={() => { indexOfPost == i ? setIndexOfPost(-1) : setIndexOfPost(i) }}><RiEdit2Fill /></button>}
-                            <br />
-                            {showBody == i && <button onClick={() => { navigate(`./${post.id}/comments`, { state: post }) }}>comments</button>}
-                            {post.userId == user.id && <button disabled={indexOfPost == i} onClick={() => deletePost(post.id, post.userId)}><AiFillDelete /></button>}
-                        </div>
-                    )
-                })}</div>
+            {postsDisplay()}
             {arrPostsToDisplay.length == 0 && <span>No posts</span>}
         </>)
 }
