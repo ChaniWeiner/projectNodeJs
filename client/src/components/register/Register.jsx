@@ -8,67 +8,28 @@ function Register() {
 
     const [user, setUser] = useContext(currentUserContext);
     const [isExtendedDetailsOpen, setIsExtendedDetailsOpen] = useState(true);
-    const [userIdentificationInformation, setUserIdentificationInformation] = useState({ username: "", website: "" });
-    const [generalNumberOfUser, setGeneralNumberOfUser] = useState(0)
+    const [userIdentificationInformation, setUserIdentificationInformation] = useState({ username: "", password: "" });
     const navigate = useNavigate();
 
-    useEffect(() => {
-        fetch(`http://localhost:8081/generalNumberOfEachItem/user`).
-            then(response => (response.json()))
-            .then(data => setGeneralNumberOfUser(data))
-    }, [isExtendedDetailsOpen])
-
     function filInExtendedDetails(data) {
-        let currentUserId = (JSON.parse(parseInt(generalNumberOfUser.userGeneralNumber)) + 1).toString();
-        console.log(currentUserId)
-        fetch(`http://localhost:8081/users`, {
+        fetch(`http://localhost:8081/user`, {
             method: 'POST',
+            headers: { 'Content-Type': 'application/json', 'charset': 'UTF-8' },
             body: JSON.stringify({
-                id: currentUserId,
+                id: data.id,
                 name: data.name,
                 username: userIdentificationInformation.username,
                 email: data.email,
-                address: {
-                    street: data.street,
-                    suite: data.suit,
-                    city: data.city,
-                    zipcode: data.zipcode,
-                    geo: {
-                        lat: data.lat,
-                        lng: data.lng,
-                    }
-                },
-                phone: data.phone,
-                website: userIdentificationInformation.website,
-                company: {
-                    name: data.name,
-                    catchPhrase: data.catchPhrase,
-                    bs: data.bs
-
-                }
+                phone: data.phone
             })
-        }).then(response => (response.json()))
+        })
+            .then(response => response.json())
             .then((data) => {
                 alert("added ");
-                setUser(data)
-                localStorage.setItem("user", (JSON.stringify({ userId: data.id, username: data.username })));
-                navigate(`/home/user/${currentUserId}`);
-
+                setUser(data["user"])
+                localStorage.setItem("user", (JSON.stringify({ userId: data["user"].id, username: data["user"].username })));
+                navigate(`/home/user/${data["user"].id}`);
             })
-        updategeneralNumberOfUser(currentUserId)
-    }
-
-
-    function updategeneralNumberOfUser(number) {
-        const user = {
-            id: "user",
-            userGeneralNumber: number
-        }
-        fetch(`http://localhost:8081/generalNumberOfEachItem/user`, {
-            method: "PUT",
-            body: JSON.stringify(user),
-        })
-            .then(response => response.json());
     }
 
     const signUp = (data) => {
@@ -78,19 +39,20 @@ function Register() {
         if (password != verifyPassword)
             alert("The passwords do not match")
         else {
-            fetch(`http://localhost:8081/users?username=${username}`)
-                .then((response) => response.json()).then((data) => {
-                    if (data.length != 0) {
-                        alert("User already exists:");
-
-                    } else {
-
+            fetch(`http://localhost:8081/user?username=${username}`)
+                .then((response) => response.json())
+                .then((data) => {
+                    console.log(data.status)
+                    if (data.status == 200) {
+                        alert("User already exists");
+                    }
+                    else {
+                        console.log()
                         setIsExtendedDetailsOpen((isExtendedDetailsOpen) => !isExtendedDetailsOpen);
-                        setUserIdentificationInformation({ username: username, website: password });
+                        setUserIdentificationInformation({ username: username, password: password });
                         navigate('/register/details');
                     }
-                }
-                )
+                })
         }
     }
 
@@ -117,9 +79,12 @@ function Register() {
             </div>}
 
             {!isExtendedDetailsOpen && <form onSubmit={handleSubmit(filInExtendedDetails)}>
-
+                <h3>Just a few more details and you're in!</h3>
                 <input type='text' placeholder='name'  {...register("name", { required: true })} />
                 {errors.name && errors.name.type === "required" && (<p className="errorMsg">Name is required.</p>)}
+                <br />
+                <input type='text' placeholder='id'  {...register("id", { required: true })} />
+                {errors.id && errors.id.type === "required" && (<p className="errorMsg">Id is required.</p>)}
                 <br />
                 <input type='email' placeholder='email' {...register("email", {
                     required: true,
@@ -142,7 +107,7 @@ function Register() {
                 <br />
 
                 <input type="submit" value="register" />
-            </form> }
+            </form>}
         </>)
 }
 

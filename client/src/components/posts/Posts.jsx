@@ -100,8 +100,7 @@ function Posts() {
                     )
                 })}</div>
             {arrPostsToDisplay.length == 0 && <span>No posts</span>}
-        </>
-    )
+        </>)
 }
 
 export default Posts

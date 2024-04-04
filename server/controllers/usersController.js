@@ -26,17 +26,17 @@ export default class UsersController {
         }
 
     }
-    
+
     async getUserByUsername(req, res, next) {
         try {
-            console.log("The username in query: "+req.query.username)
+            console.log("The username in query: " + req.query.username)
             const userService = new UserService();
             const data = await userService.getByUsername(req.query.username);
-            if(data==null){
-                return res.status(500).end("user not found");
+            if (data == null) {
+                return res.json({ status: 404, data: null })
             }
-            console.log("ggggg "+data.name)
-            return res.json(data);
+            console.log("ggggg " + data.name)
+            return res.json({ status: 404, data: data });
         }
         catch (err) {
             return res.status(404).end(`${err}`)
@@ -46,8 +46,9 @@ export default class UsersController {
     async addUser(req, res) {
         try {
             const userService = new UserService();
-            await userService.addUser(req.body);
-            res.status(200).end(`user with id: ${req.body.id} added succefuly`);
+            let result=await userService.addUser(req.body);
+            console.log(result.insertId)
+            return res.status(201).json({user: req.body});
         }
         catch (ex) {
             return res.status(500).end(`${ex}`)
