@@ -15,13 +15,15 @@ function Register() {
         fetch(`http://localhost:8081/user`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json', 'charset': 'UTF-8' },
-            body: JSON.stringify({
+            body: JSON.stringify([{
                 id: data.id,
                 name: data.name,
                 username: userIdentificationInformation.username,
                 email: data.email,
                 phone: data.phone
-            })
+            },
+            { userId: data.id, password: userIdentificationInformation.password }
+            ])
         })
             .then(response => response.json())
             .then((data) => {

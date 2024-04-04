@@ -24,14 +24,13 @@ function Login() {
                     alert("user does not exist please sign up");
             })
             .then(data => {
-                if (data != undefined)
-                    checkIfExsits(data, password);
+                if (data != undefined){
+                    checkIfExsits(data["data"], password);}
             })
     }
 
 
     function checkIfExsits(user_, password) {
-        console.log("user length: " + user_)
         if (user_ == null) {
             alert("user does not exist please sign up")
         } else {

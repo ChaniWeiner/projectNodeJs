@@ -1,4 +1,5 @@
 import { UserService } from '../service/usersService.js'
+import { PasswordService } from '../service/passwordService.js'
 
 export default class UsersController {
 
@@ -36,7 +37,7 @@ export default class UsersController {
                 return res.json({ status: 404, data: null })
             }
             console.log("ggggg " + data.name)
-            return res.json({ status: 404, data: data });
+            return res.json({ status: 200, data: data });
         }
         catch (err) {
             return res.status(404).end(`${err}`)
@@ -46,9 +47,10 @@ export default class UsersController {
     async addUser(req, res) {
         try {
             const userService = new UserService();
-            let result=await userService.addUser(req.body);
-            console.log(result.insertId)
-            return res.status(201).json({user: req.body});
+            const passwordService = new PasswordService();
+            await userService.addUser(req.body[0]);
+            await passwordService.addPassword(req.body[1])
+            return res.status(201).json({ user: req.body[0] });
         }
         catch (ex) {
             return res.status(500).end(`${ex}`)

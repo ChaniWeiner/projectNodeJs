@@ -27,17 +27,6 @@ export default class PasswordController {
         }
     }
 
-    async getPasswordByPasswordname(req, res, next) {
-        try {
-            const passwordService = new PasswordService();
-            const data = await passwordService.getByPasswordname(req.query.passwordname);
-            return res.json(data);
-        }
-        catch (err) {
-            return res.status(404).end(`${err}`)
-        }
-    }
-
     async addPassword(req, res) {
         try {
             console.log("pswd req.body= "+req.body.password+" "+req.body.userId+" "+req.body)
