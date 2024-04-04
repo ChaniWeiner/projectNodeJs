@@ -23,7 +23,7 @@ function Posts() {
     useEffect(() => {
         fetch(`http://localhost:8081/post`)
             .then(response => (response.json()))
-            .then(data => (setArrOfPosts(data), setArrPostsToDisplay(data)));
+            .then(data => {console.log(data);setArrOfPosts(data); setArrPostsToDisplay(data)});
     }, [])
 
     function deletePost(dataId, userId) {
@@ -38,27 +38,36 @@ function Posts() {
             ).then(setArrPostsToDisplay(filtered)).then(setArrOfPosts(filtered))
     }
 
-    function updatePost(event, idPost, i) {
+    function updatePost(event, post, i) {
         let filtered
         event.preventDefault()
-        fetch(`http://localhost:8081/post/${idPost}`, {headers: { 'Content-Type': 'application/json', 'charset':'UTF-8' },
-            method: "PUT",
-            body: JSON.stringify({
-                title: event.target[0].value,
-                body: event.target[1].value,
-            }),
-        }).then(response => response.json())
-            .then(filtered = arrOfPosts.filter(obj => {
-                return obj.id != idPost
+        fetch(`http://localhost:8081/post/${post.id}`,
+            {
+                headers: { 'Content-Type': 'application/json', 'charset': 'UTF-8' },
+                method: "PUT",
+                body: JSON.stringify({
+                    id: post.id,
+                    userId: post.userId,
+                    title: event.target[0].value,
+                    body: event.target[1].value,
+                }),
             })
-            ).then(data => setArrPostsToDisplay((prev) => {
+            .then(response => response.json())
+            .then(data => {
+                filtered = arrOfPosts.filter(obj => {
+                    return obj.id != post.id
+                });
+                return data["data"]
+            })
+            .then(data => setArrPostsToDisplay((prev) => {
                 const tempArrOfPosts = [
                     ...prev.slice(0, i),
                     data,
                     ...prev.slice(i + 1)
                 ];
                 return tempArrOfPosts
-            })).then(setArrOfPosts(arrPostsToDisplay)).then(setIndexOfPost())
+            }))
+            .then(setArrOfPosts(arrPostsToDisplay)).then(setIndexOfPost())
     }
 
     return (
@@ -66,14 +75,14 @@ function Posts() {
             <h3>Posts</h3>
             <button onClick={() => addScreen == true ? setAddScreen(false) : setAddScreen(true)}>add post</button>
             {addScreen && <AddPost arrOfPosts={arrOfPosts} setArrOfPosts={setArrOfPosts} setAddScreen={setAddScreen} setArrPostsToDisplay={setArrPostsToDisplay} user={user} />}
-            {<SearchPost arrOfPosts={arrOfPosts} setArrPostsToDisplay={setArrPostsToDisplay}/>}
+            {<SearchPost arrOfPosts={arrOfPosts} setArrPostsToDisplay={setArrPostsToDisplay} />}
             <div className='postStyle'>
                 {arrPostsToDisplay.map((post, i) => {
                     return (
                         <div key={i} id={i}>
                             <h4>post number: {post.id}</h4>
                             <h5>author id: {post.userId}</h5>
-                            <form onSubmit={() => updatePost(event, post.id, i)}>
+                            <form onSubmit={() => updatePost(event, post, i)}>
                                 {indexOfPost != i ? null : <label>title:</label>}
                                 {indexOfPost != i ? showBody == i ? <p style={style}>title: {post.title}</p> : <p >title: {post.title}</p>
                                     : <input type="text" defaultValue={post.title} />}

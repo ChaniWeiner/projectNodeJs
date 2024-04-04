@@ -72,7 +72,7 @@ export default class CommentController {
             const commentService = new CommentService();
             console.log("in controller: "+req.params.id+" body: "+req.body.name)
             await commentService.updateComment(req.body, req.params.id);
-            return res.status(201).json({body: req.body});
+            return res.json({ status: 200, data: req.body });
         }
         catch (ex) {
             return res.status(500).end(`${ex}`)

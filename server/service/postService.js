@@ -23,7 +23,7 @@ export class PostService {
         return result;
     }
     async updatePost(post,id) {
-        const result = await executeQuery('UPDATE `db_cs`.`post` SET `userId`=?, `title` = ?,`body`=? WHERE (`id` = ?)',[post.userId, post.title, post.body,id]);
+        const result = await executeQuery('UPDATE `db_cs`.`posts` SET `title` = ?,`body`=? WHERE (`id` = ?)',[ post.title, post.body,id]);
         return result;
     }
 }

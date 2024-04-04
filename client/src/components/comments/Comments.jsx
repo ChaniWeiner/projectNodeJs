@@ -36,32 +36,37 @@ function Comments() {
             ).then(setArrOfComments(filtered))
     }
 
-    function updateComment(event, idComment, i) {
+    function updateComment(event, comment, i) {
         let filtered
         event.preventDefault()
-        console.log("id comment: "+idComment)
-        fetch(`http://localhost:8081/comment/${idComment}`, {
+        console.log("id comment: " + comment.id)
+        fetch(`http://localhost:8081/comment/${comment.id}`, {
             method: "PUT",
-            headers: { 'Content-Type': 'application/json', 'charset':'UTF-8' },
+            headers: { 'Content-Type': 'application/json', 'charset': 'UTF-8' },
             body: JSON.stringify({
-                id: idComment,
+                id: comment.id,
+                postId: comment.postId,
                 name: event.target[0].value,
                 email: user.email,
                 body: event.target[1].value
             }),
         })
-        // .then(response => {response.json();console.log("comment response: "+response)})
-            .then(filtered = arrOfComments.filter(obj => {
-                return obj.id != idComment
+            .then(response => response.json())
+            .then(data => {
+                filtered = arrOfComments.filter(obj => {
+                    return obj.id != comment.id
+                }); 
+                return data["data"]
             })
-            ).then(data => setArrOfComments((prev) => {console.log("updated data: "+data )
+            .then(data => setArrOfComments((prev) => {
+                console.log("updated data: " + data)
                 const tempArrOfComments = [
                     ...prev.slice(0, i),
                     data,
                     ...prev.slice(i + 1)
                 ];
                 return tempArrOfComments
-            })).then(setIndexOfComment()).catch(ex=>console.log(ex))
+            })).then(setIndexOfComment()).catch(ex => console.log(ex))
     }
 
     return (
@@ -75,8 +80,8 @@ function Comments() {
             {arrOfComments.map((comment, i) => {
                 return (
                     <div key={i}>
-                    {/* {console.log("The comment: "+comment)} */}
-                        <form onSubmit={() => updateComment(event, comment.id, i)}>
+                        {/* {console.log("The comment: "+comment)} */}
+                        <form onSubmit={() => updateComment(event, comment, i)}>
                             {indexOfComment != i ? <p>{1 + i + ". name: " + comment.name}</p> : <input type="text" defaultValue={comment.name} />}
                             <p>{"email: " + comment.email}</p>
                             {indexOfComment != i ? <p>{"body: " + comment.body}</p> : <input type="text" defaultValue={comment.body} />}

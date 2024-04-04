@@ -79,7 +79,7 @@ export default class PostController {
         try {
             const postService = new PostService();
             await postService.updatePost(req.body, req.params.id);
-            res.json({ status: 200, data: req.params.id });
+            return res.json({ status: 200, data: req.body });
         }
         catch (ex) {
             res.status(200).end(`Post with id: ${req.params.id} updated succefuly`);
