@@ -7,6 +7,7 @@ import { todoRouter } from "./routers/todoRouter.js";
 import { commentRouter } from "./routers/commentRouter.js";
 import { logErrors } from "./middleware/logErrors.js"
 import { passwordRouter } from "./routers/passwordRouter.js";
+import { regRouter } from "./routers/registrationRouter.js"
 
 const app = express()
 app.use(cors());
@@ -16,6 +17,7 @@ app.use('/post', postRouter);
 app.use('/todo', todoRouter);
 app.use('/password', passwordRouter);
 app.use('/comment', commentRouter);
+app.use('/login', regRouter);
 // app.use(logErrors);
 
 app.listen(8081, () => {

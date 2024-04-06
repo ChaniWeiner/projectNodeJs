@@ -46,18 +46,18 @@ export default class UsersController {
 
     async addUser(req, res) {
         try {
-            const userService = new UserService();
+            const userService = new UserService();      
             const passwordService = new PasswordService();
             await userService.addUser(req.body[0]);
             await passwordService.addPassword(req.body[1])
             return res.status(201).json({ user: req.body[0] });
         }
         catch (ex) {
-            return res.status(500).end(`${ex}`)
-            // const err = {}
-            // err.status = 500;
-            // err.message = ex;
-            // next(err)
+            // return res.status(500).end(`${ex}`)
+            const err = {}
+            err.status = 500;
+            err.message = ex;
+            next(err)
         }
     }
     async deleteUser(req, res) {

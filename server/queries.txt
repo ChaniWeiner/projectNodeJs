@@ -11,16 +11,18 @@
 CREATE SCHEMA `db_cs` ;
 
 CREATE TABLE `db_cs`.`users` (
-  `id` INT NOT NULL,
+  `id` INT AUTO_INCREMENT,
   `name` VARCHAR(45) NOT NULL,
-  `username` VARCHAR(45) NOT NULL,
-  `phone` INT NULL,
+  `username` VARCHAR(10) NOT NULL,
+  `phone` VARCHAR(10) NULL,
   `email` VARCHAR(45) NOT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE INDEX `id_UNIQUE` (`id` ASC));	
+  UNIQUE INDEX `id_UNIQUE` (`id` ASC) VISIBLE,
+  UNIQUE INDEX `username_UNIQUE` (`username` ASC) VISIBLE,
+  UNIQUE INDEX `email_UNIQUE` (`email` ASC) VISIBLE);
 
 CREATE TABLE `db_cs`.`todos` (
-  `id` INT NOT NULL,
+  `id` INT AUTO_INCREMENT,
   `userId` INT NOT NULL,
   `title` VARCHAR(45) NOT NULL,
   `completed` TINYINT NOT NULL,
@@ -33,7 +35,7 @@ CREATE TABLE `db_cs`.`todos` (
     ON UPDATE NO ACTION);
 
 CREATE TABLE `db_cs`.`posts` (
-  `id` INT NOT NULL,
+  `id` INT AUTO_INCREMENT,
   `userId` INT NOT NULL,
   `title` VARCHAR(45) NOT NULL,
   `body` VARCHAR(45) NULL,
@@ -46,7 +48,7 @@ CREATE TABLE `db_cs`.`posts` (
     ON UPDATE NO ACTION);	
 
 CREATE TABLE `db_cs`.`comments` (
-  `id` INT NOT NULL,
+  `id` INT AUTO_INCREMENT,
   `postId` INT NOT NULL,
   `name` VARCHAR(45) NOT NULL,
   `email` VARCHAR(45) NOT NULL,

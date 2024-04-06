@@ -13,7 +13,6 @@ function Comments() {
     const [user, setUser] = useContext(currentUserContext);
     const location = useLocation();
     const post = location.state
-
     const [arrOfComments, setArrOfComments] = useState([])
     const [addScreen, setAddScreen] = useState(false)
     const [indexOfComment, setIndexOfComment] = useState()

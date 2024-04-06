@@ -22,7 +22,7 @@ function Main() {
         const user = JSON.parse(localStorage.getItem("user"))
         user && fetch(`http://localhost:8081/user?username=${user.username}`)
             .then(response => response.json())
-            .then(data => setUser(data))
+            .then(data => setUser(data["data"]))
     }, []);
 
 
