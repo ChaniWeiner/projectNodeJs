@@ -23,7 +23,8 @@ export class PasswordService {
         return result;
     }
     async updatePassword(password, id) {
-        const result = await executeQuery('UPDATE `db_cs`.`passwords` SET `password`=? WHERE (`id` = ?)', [password, id]);
+        console.log("pswd got: "+password)
+        const result = await executeQuery('UPDATE `db_cs`.`passwords` SET `password`=? WHERE (`userId` = ?)', [password, id]);
         return result;
     }
 }
