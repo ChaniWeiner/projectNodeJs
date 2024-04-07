@@ -48,9 +48,15 @@ export default class UsersController {
         try {
             const userService = new UserService();      
             const passwordService = new PasswordService();
-            await userService.addUser(req.body[0]);
-            await passwordService.addPassword(req.body[1])
-            return res.status(201).json({ user: req.body[0] });
+            let result= await userService.addUser(req.body[0]);
+            console.log("resultttt"+result.insertId)
+            let pswd=req.body[1]
+            let user =req.body[0]
+            user.id=result.insertId
+            pswd.userId=result.insertId
+            await passwordService.addPassword(pswd)
+
+            return res.status(201).json({ user: user });
         }
         catch (ex) {
             // return res.status(500).end(`${ex}`)

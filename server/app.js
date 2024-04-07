@@ -17,7 +17,7 @@ app.use('/post', postRouter);
 app.use('/todo', todoRouter);
 app.use('/password', passwordRouter);
 app.use('/comment', commentRouter);
-app.use('/login', regRouter);
+app.use('/', regRouter);
 // app.use(logErrors);
 
 app.listen(8081, () => {

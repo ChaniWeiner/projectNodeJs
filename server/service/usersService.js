@@ -18,6 +18,7 @@ export class UserService {
     async addUser(user) {
         console.log(user)
         const result = await executeQuery('INSERT INTO `db_cs`.`users` (`id`, `name`, `username`, `phone`, `email`) VALUES (?, ?, ?, ?, ?)', [user.id, user.name, user.username, user.phone, user.email]);
+        console.log(result+result.insertId)
         return result;
     }
     async deleteUser(id) {

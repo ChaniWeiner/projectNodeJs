@@ -19,7 +19,7 @@ function Register() {
     } = useForm();
 
     function signUp(data) {
-        fetch(`http://localhost:8081/user`, {
+        fetch(`http://localhost:8081/register`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json', 'charset': 'UTF-8' },
             body: JSON.stringify([{
@@ -29,7 +29,7 @@ function Register() {
                 email: data.email,
                 phone: data.phone
             },
-            { userId: data.id, password: userIdentificationInformation.password }
+            { userId: null, password: userIdentificationInformation.password }
             ])
         })
             .then(response => response.json())
