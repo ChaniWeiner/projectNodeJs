@@ -14,46 +14,6 @@ function Login() {
         getUserFromDb(data.username, data.password);
     }
 
-    // function getUserFromDb(username, password) {
-    //     console.log("The username: " + username)
-    //     fetch(`http://localhost:8081/user?username=${username}`)
-    //         .then(response => {
-    //             if (response.status == 200)
-    //                 return response.json();
-    //             else
-    //                 alert("user does not exist please sign up");
-    //         })
-    //         .then(data => {
-    //             if (data != undefined){
-    //                 checkIfExsits(data["data"], password);}
-    //         })
-    // }
-
-
-    // function checkIfExsits(user_, password) {
-    //     if (user_ == null) {
-    //         alert("user does not exist please sign up")
-    //     } else {
-    //         console.log("user: " + user_)
-    //         fetch(`http://localhost:8081/password`,
-    //             {
-    //                 headers: { 'Content-Type': 'application/json', 'charset': 'UTF-8' },
-    //                 method: 'POST',
-    //                 body: JSON.stringify({
-    //                     userId: user_.id,
-    //                     password: password
-    //                 })
-    //             })
-    //             .then(data => {
-    //                 console.log("data: " + data.status)
-    //                 if (data.status == 200) {
-    //                     setUser(user_)
-    //                     localStorage.setItem("user", (JSON.stringify({ userId: user_.id, username: user_.username })))
-    //                     navigate(`/home/user/${parseInt((user_.id), 10)}`);
-    //                 } else alert("user does not exist please sign up")
-    //             })
-    //     }
-    // }
     function getUserFromDb(username, password) {
         console.log("The username: " + username)
         fetch(`http://localhost:8081/login`,
@@ -67,7 +27,7 @@ function Login() {
             })
             .then(result=>result.json())
             .then(data => {
-                console.log("The data: " + data.status+data.data+data.data.id+data.status+data["data"].phone)
+                // console.log("The data: " + data.status+data.data+data.data.id+data.status+data["data"].phone)
                 if (data.status == 200) {
                     let user = data["data"]
                     setUser(user)

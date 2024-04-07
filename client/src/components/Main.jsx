@@ -19,8 +19,8 @@ function Main() {
     const [user, setUser] = useState({})
 
     useEffect(() => {
-        const user = JSON.parse(localStorage.getItem("user"))
-        user && fetch(`http://localhost:8081/user?username=${user.username}`)
+        const curUser = JSON.parse(localStorage.getItem("user"))
+        curUser && fetch(`http://localhost:8081/user?username=${curUser.username}`)
             .then(response => response.json())
             .then(data => setUser(data["data"]))
     }, []);

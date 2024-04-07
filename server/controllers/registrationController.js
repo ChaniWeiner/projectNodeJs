@@ -7,8 +7,8 @@ export default class RegistrationController {
             console.log("I'm here login")
             const regService = new RegistrationService();
             let result = await regService.login(req.body);
-            console.log("result in control:" + result + result.id+result.phone)
-            if (result == null)
+            console.log("result in control:" + result )
+            if (result == undefined)
                 return res.status(404).json({ status: 404 });
             return res.status(200).json({ status: 200, data: result });
         }
