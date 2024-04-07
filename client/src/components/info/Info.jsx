@@ -32,13 +32,16 @@ function Info() {
                 }
                 else alert("password can't update try again")
                 setChangePswd(false)
+                reset()
             })
     }
+
     function openChangePasswordForm() {
-        setChangePswd(true)
+        setChangePswd(!changePswd)
     }
 
     const {
+        reset,
         register,
         handleSubmit,
         formState: { errors },

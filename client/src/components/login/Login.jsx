@@ -35,11 +35,13 @@ function Login() {
                     navigate(`/home/user/${parseInt((user.id), 10)}`);
                 }
                 else alert("user does not exist please sign up")
+                reset()
             })
     }
 
 
     const {
+        reset,
         register,
         handleSubmit,
         formState: { errors },
