@@ -23,7 +23,7 @@ function Register() {
             method: 'POST',
             headers: { 'Content-Type': 'application/json', 'charset': 'UTF-8' },
             body: JSON.stringify([{
-                id: data.id,
+                id: null,
                 name: data.name,
                 username: userIdentificationInformation.username,
                 email: data.email,
@@ -98,9 +98,6 @@ function Register() {
             <h3>Just a few more details and you're in!</h3>
             <input type='text' placeholder='name'  {...register("name", { required: true })} />
             {errors.name && errors.name.type === "required" && (<p className="errorMsg">Name is required.</p>)}
-            <br />
-            <input type='text' placeholder='id'  {...register("id", { required: true })} />
-            {errors.id && errors.id.type === "required" && (<p className="errorMsg">Id is required.</p>)}
             <br />
             <input type='email' placeholder='email' {...register("email", {
                 required: true,
