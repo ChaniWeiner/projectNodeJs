@@ -19,15 +19,10 @@ function Info() {
                     newPswd: data.newPswd
                 })
             })
-            .then(result => result.json())
-            .then(data => {
-                if (data.status == 200) {
-                    alert("password updated succefuly!")
-                }
-                else alert("password can't update try again")
-                setChangePswd(false)
-                reset()
-            })
+            .then(response => {if(!response.ok) throw new Error(`status: ${response.status}`); return response.json()})
+            .then(() =>{alert("password updated succefuly!")
+            }).catch((err) => {console.error(err); alert("password can't update try again")}).finally(()=>{ setChangePswd(false); reset()})
+
     }
 
     function openChangePasswordForm() {

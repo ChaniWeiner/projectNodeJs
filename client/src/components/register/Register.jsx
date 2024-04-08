@@ -33,14 +33,16 @@ function Register() {
             { userId: null, password: userIdentificationInformation.password }
             ])
         })
-            .then(response => response.json())
-            .then((data) => {
+        .then(response => {if(!response.ok) throw new Error(`status: ${response.status}`); return response.json()})
+        .then((data) => {
                 alert("added ");
                 setUser(data["user"])
                 localStorage.setItem("user", (JSON.stringify({ userId: data["user"].id, username: data["user"].username })));
                 navigate(`/home/user/${data["user"].id}`);
                 reset()
             })
+        .catch((err) => {console.error(err); alert("something went wrong please try later")})
+
     }
 
     const getIn = (data) => {

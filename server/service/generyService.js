@@ -16,7 +16,6 @@ export class Service {
         return result;
     }
     async add(tableName, item) {
-        // console.log(user)
         const result = await executeQuery(`INSERT INTO ${process.env.DB_NAME}.${tableName} VALUES (${Object.keys(item).map(() => '?')})`, [...Object.values(item)]);
         return result;
     }
@@ -27,6 +26,7 @@ export class Service {
     async update(tableName, item, type, id) {
         if (type != null) {
             const result = await executeQuery(`UPDATE ${process.env.DB_NAME}.${tableName} SET ${Object.keys(item).map(column => column + '=?')} WHERE ${type}=?`, [...Object.values(item), id]);
+            return result;
         }
         const result = await executeQuery(`UPDATE ${process.env.DB_NAME}.${tableName} SET ${Object.keys(item).map(column => column + '=?')} WHERE id=?`, [...Object.values(item), id]);
         return result;

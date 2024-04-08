@@ -21,8 +21,10 @@ function Main() {
     useEffect(() => {
         const curUser = JSON.parse(localStorage.getItem("user"))
         curUser && fetch(`http://localhost:8081/user?username=${curUser.username}`)
-            .then(response => response.json())
-            .then(data => setUser(data["data"]))
+        .then(response => {if(!response.ok) throw new Error(`status: ${response.status}`); return response.json()})
+        .then(data => setUser(data["data"]))
+        .catch((err) => {console.error(err); alert("something went wrong please try later")})
+
     }, []);
 
 

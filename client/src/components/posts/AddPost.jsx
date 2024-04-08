@@ -24,14 +24,15 @@ function AddPost({ arrOfPosts, setArrOfPosts, setAddScreen, setArrPostsToDisplay
                 body: currentPost.body
             })
         })
-        .then(response => (response.json()))
-            .then((response) => {
+        .then(response => {if(!response.ok) throw new Error(`status: ${response.status}`); return response.json()})
+        .then((response) => {
                 alert("Post added succefuly!");
                 currentPost.id=response["id"]
                 setArrOfPosts([...arrOfPosts, currentPost]);
                 setArrPostsToDisplay([...arrOfPosts, currentPost])
                 setAddScreen(false)
-            }).catch(ex=>console.log(ex))
+            }).catch((err) => {console.error(err); alert("something went wrong please try later")})
+
     }
 
     return (<>

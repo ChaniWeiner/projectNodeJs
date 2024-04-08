@@ -19,9 +19,9 @@ function Todos() {
         const curUser = JSON.parse(localStorage.getItem("user"));
         console.log("userId " + curUser.userId)
         fetch(`http://localhost:8081/todo?userId=${curUser.userId}`)
-            .then(response => response.json())
+            .then(response => {if(!response.ok) throw new Error(`status: ${response.status}`); return response.json()})
             .then(data => { console.log(data); setArrOfTodos(data); setArrTodosToDisplay(data) })
-            .catch(err => alert(err))
+            .catch((err) => {console.error(err); alert("something went wrong please try later")})
     }, [])
 
     function deleteTodo(dataId) {
@@ -29,11 +29,13 @@ function Todos() {
         fetch(`http://localhost:8081/todo/${dataId}`, {
             method: "DELETE",
         })
-            .then(response => response.toString())
-            .then(filtered = arrOfTodos.filter(obj => {
+        .then(response => {if(!response.ok) throw new Error(`status: ${response.status}`); return response.toString()})
+        .then(filtered = arrOfTodos.filter(obj => {
                 return obj.id != dataId;
             })
             ).then(setArrTodosToDisplay(filtered)).then(setArrOfTodos(filtered))
+            .catch((err) => {console.error(err); alert("something went wrong please try later")})
+
     }
 
     function updateTodo(event, todo, i) {
@@ -49,8 +51,8 @@ function Todos() {
                 completed: event.target[1].checked,
             })
         })
-            .then(response => response.json())
-            .then(data => {
+        .then(response => {if(!response.ok) throw new Error(`status: ${response.status}`); return response.json()})
+        .then(data => {
                 filtered = arrOfTodos.filter(obj => {
                     return obj.id != todo.id
                 })
@@ -66,6 +68,8 @@ function Todos() {
             }))
             .then(setArrOfTodos(arrTodosToDisplay)).
             then(setIndexOfTodo())
+            .catch((err) => {console.error(err); alert("something went wrong please try later")})
+
     }
 
     function todoDisplay() {

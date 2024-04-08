@@ -22,8 +22,9 @@ function Posts() {
 
     useEffect(() => {
         fetch(`http://localhost:8081/post`)
-            .then(response => (response.json()))
-            .then(data => { console.log(data); setArrOfPosts(data); setArrPostsToDisplay(data) });
+        .then(response => {if(!response.ok) throw new Error(`status: ${response.status}`); return response.json()})
+        .then(data => { console.log(data); setArrOfPosts(data); setArrPostsToDisplay(data) })
+        .catch((err) => {console.error(err); alert("something went wrong please try later")});
     }, [])
 
     function deletePost(dataId, userId) {
@@ -32,11 +33,13 @@ function Posts() {
             fetch(`http://localhost:8081/post/${dataId}`, {
                 method: "DELETE",
             })
-                .then(response => response.json())
+            .then(response => {if(!response.ok) throw new Error(`status: ${response.status}`); return response.json()})
                 .then(filtered = arrOfPosts.filter(obj => {
                     return obj.id != dataId;
                 })
                 ).then(setArrPostsToDisplay(filtered)).then(setArrOfPosts(filtered))
+                .catch((err) => {console.error(err); alert("something went wrong please try later")})
+
         }
     }
 
@@ -54,7 +57,7 @@ function Posts() {
                     body: event.target[1].value,
                 }),
             })
-            .then(response => response.json())
+            .then(response => {if(!response.ok) throw new Error(`status: ${response.status}`); return response.json()})
             .then(data => {
                 filtered = arrOfPosts.filter(obj => { return obj.id != post.id });
                 return data["data"]
@@ -68,6 +71,8 @@ function Posts() {
                 return tempArrOfPosts
             }))
             .then(setArrOfPosts(arrPostsToDisplay)).then(setIndexOfPost())
+            .catch((err) => {console.error(err); alert("something went wrong please try later")})
+
     }
 
     function postsDisplay() {

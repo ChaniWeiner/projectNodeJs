@@ -26,13 +26,15 @@ function AddComment({ arrOfComments, setArrOfComments, setAddScreen, user, post 
                 body: currentComment.body
             })
         })
-        .then(response => (response.json()))
-            .then((response) => {
+        .then(response => {if(!response.ok) throw new Error(`status: ${response.status}`); return response.json()})
+        .then((response) => {
                 alert("comment added succefuly!");
                 currentComment.id=response["id"]
                 setArrOfComments([...arrOfComments, currentComment]);
                 setAddScreen(false)
             })
+        .catch((err) => {console.error(err); alert("something went wrong please try later")})
+
     }
 
     return (<>

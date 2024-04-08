@@ -8,24 +8,29 @@ export default class TodoController {
             const data = await service.getById('todos',req.params.id);
             return res.json(data);
         }
-        catch (err) {
-            return res.status(404).end(`${err}`)
+        catch (ex) {
+              const err = {}
+            err.statusCode = 404;
+            err.message = ex;
+            next(err)
         }
     }
 
     async getTodosByUserId(req, res, next) {
         try {
             const service = new Service();
-            const data = await service.getByParameter('todo','userId',req.query.userId);
+            const data = await service.getByParameter('todos','userId',req.query.userId);
             return res.json(data);
         }
-        catch (err) {
-            return `Internal Server Error\nYou may not see any todo\n(${err.message})`
-            // throw res.status(500).json({ error: `Internal Server Error\nYou may not see any todo\n(${err.message})`, status: 500 })
+        catch (ex) {
+           const err = {}
+            err.statusCode = 500;
+            err.message = ex;
+            next(err)
         }
     }
 
-    async addTodo(req, res) {
+    async addTodo(req, res,next) {
         try {
             console.log(req.body)
             const service = new Service();
@@ -33,42 +38,38 @@ export default class TodoController {
             return res.status(201).json({id: result.insertId});
         }
         catch (ex) {
-            console.log(ex)
-            return res.status(500).end(`${ex}`)
-            // const err = {}
-            // err.status = 500;
-            // err.message = ex;
-            // next(err)
+            const err = {}
+            err.status = 500;
+            err.message = ex;
+            next(err)
         }
     }
-    async deleteTodo(req, res) {
+    async deleteTodo(req, res,next) {
         try {
             const service = new Service();
             await service.delete('todos',req.params.id);
             res.status(200).end(`Todo with id: ${req.params.id} deleted succefuly`);
         }
         catch (ex) {
-            return res.status(500).end(`err=${ex}`)
-            // const err = {}
-            // err.statusCode = 500;
-            // err.message = ex;
-            // next(err)
+            const err = {}
+            err.statusCode = 500;
+            err.message = ex;
+            next(err)
         }
     }
 
-    async updateTodo(req, res) {
+    async updateTodo(req, res,next) {
         try {
             console.log(req.body)
             const service = new Service();
-            await service.update('todos',req.body, req.params.id);
+            await service.update('todos',req.body,null, req.params.id);
             return res.json({ status: 200, data: req.body });
         }
         catch (ex) {
-            return res.status(500).end(`${ex}`)
-            // const err = {}
-            // err.statusCode = 500;
-            // err.message = ex;
-            // next(err)
+            const err = {}
+            err.statusCode = 500;
+            err.message = ex;
+            next(err)
         }
     }
 }

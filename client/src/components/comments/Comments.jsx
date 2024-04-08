@@ -20,8 +20,10 @@ function Comments() {
 
     useEffect(() => {
         fetch(`http://localhost:8081/comment?postId=${post.id}`)
-            .then(response => response.json())
-            .then(data => setArrOfComments(data));
+        .then(response => {if(!response.ok) throw new Error(`status: ${response.status}`); return response.json()})
+        .then(data => setArrOfComments(data))
+        .catch((err) => {console.error(err); alert("something went wrong please try later")})
+
     }, [])
 
     function deleteComment(commentId) {
@@ -51,8 +53,8 @@ function Comments() {
                 body: event.target[1].value
             }),
         })
-            .then(response => response.json())
-            .then(data => {
+        .then(response => {if(!response.ok) throw new Error(`status: ${response.status}`); return response.json()})
+        .then(data => {
                 filtered = arrOfComments.filter(obj => {
                     return obj.id != comment.id
                 });
@@ -66,7 +68,9 @@ function Comments() {
                     ...prev.slice(i + 1)
                 ];
                 return tempArrOfComments
-            })).then(setIndexOfComment()).catch(ex => console.log(ex))
+            })).then(setIndexOfComment())
+            .catch((err) => {console.error(err); alert("something went wrong please try later")})
+
     }
 
     function commentsDisplay() {

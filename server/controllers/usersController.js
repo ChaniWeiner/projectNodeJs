@@ -8,9 +8,11 @@ export default class UsersController {
             const data = await service.getById('users',req.params.id);
             return res.json(data);  
         }
-        catch (err) {
-            console.log("err   "+err)
-            return res.status(500).json({status:500,data:err})
+        catch (ex) {
+            const err = {}
+            err.statusCode = 500;
+            err.message = ex;
+            next(err)
         }
     }
 
@@ -26,38 +28,39 @@ export default class UsersController {
             console.log("ggggg " + data.name)
             return res.json({ status: 200, data: data[0] });
         }
-        catch (err) {
-            return res.status(404).end(`${err}`)
+        catch (ex) {
+            const err = {}
+            err.statusCode = 404;
+            err.message = ex;
+            next(err)
         }
     }
 
-    async deleteUser(req, res) {
+    async deleteUser(req, res,next) {
         try {
             const service = new Service();
             await service.delete('users',req.params.id);
             res.status(200).end(`user with id: ${req.params.id} deleted succefuly`);
         }
         catch (ex) {
-            return res.status(500).end(`err=${ex}`)
-            // const err = {}
-            // err.statusCode = 500;
-            // err.message = ex;
-            // next(err)
+            const err = {}
+            err.statusCode = 500;
+            err.message = ex;
+            next(err)
         }
     }
 
-    async updateUser(req, res) {
+    async updateUser(req, res,next) {
         try {
             const service = new Service();
             await service.update('users',req.body, req.params.id);
             res.status(200).end(`user with id: ${req.params.id} updated succefuly`);
         }
         catch (ex) {
-            return res.status(500).end(`${ex}`)
-            // const err = {}
-            // err.statusCode = 500;
-            // err.message = ex;
-            // next(err)
+            const err = {}
+            err.statusCode = 500;
+            err.message = ex;
+            next(err)
         }
     }
 }

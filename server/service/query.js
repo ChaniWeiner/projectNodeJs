@@ -3,8 +3,8 @@ import 'dotenv/config'
 
 
 async function executeQuery(query, params){
-    console.log("The excute: "+query)
-    console.log("The excute params: "+params)
+    console.log("The query: "+query)
+    console.log("The query parameters: "+params)
     let results;
     const connection = await mysql.createConnection({
         host: 'localhost',

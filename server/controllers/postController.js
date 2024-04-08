@@ -15,8 +15,11 @@ export default class PostController {
             }
             return res.json(data);
         }
-        catch (err) {
-            return res.status(404).end(`${err}`);
+        catch (ex) {
+            const err = {}
+            err.statusCode = 404;
+            err.message = ex;
+            next(err)
         }
 
     }
@@ -27,13 +30,16 @@ export default class PostController {
             const data = await service.getById('posts',req.params.id);
             return res.json(data);
         }
-        catch (err) {
-            return res.status(404).end(`${err}`)
+        catch (ex) {
+            const err = {}
+            err.statusCode = 404;
+            err.message = ex;
+            next(err)
         }
 
     }
 
-    async addPost(req, res) {
+    async addPost(req, res,next) {
         try {
             console.log("I'm here add")
             const service = new Service();
@@ -41,40 +47,37 @@ export default class PostController {
             return res.status(201).json({id: result.insertId});
         }
         catch (ex) {
-            return res.status(500).end(`${ex}`)
-            // const err = {}
-            // err.status = 500;
-            // err.message = ex;
-            // next(err)
+            const err = {}
+            err.status = 500;
+            err.message = ex;
+            next(err)
         }
     }
-    async deletePost(req, res) {
+    async deletePost(req, res,next) {
         try {
             const service = new Service();
             await service.delete('posts',req.params.id);
             res.json({ status: 200, data: req.params.id });
         }
         catch (ex) {
-            res.status(200).end(`Post with id: ${req.params.id} deleted succefuly`);
-            // const err = {}
-            // err.statusCode = 500;
-            // err.message = ex;
-            // next(err)
+            const err = {}
+            err.statusCode = 200;
+            err.message = ex;
+            next(err)
         }
     }
 
-    async updatePost(req, res) {
+    async updatePost(req, res,next) {
         try {
             const service = new Service();
-            await service.update('posts',req.body, req.params.id);
+            await service.update('posts',req.body,null, req.params.id);
             return res.json({ status: 200, data: req.body });
         }
         catch (ex) {
-            res.status(200).end(`Post with id: ${req.params.id} updated succefuly`);
-            // const err = {}
-            // err.statusCode = 500;
-            // err.message = ex;
-            // next(err)
+            const err = {}
+            err.statusCode = 200;
+            err.message = ex;
+            next(err)
         }
     }
 }

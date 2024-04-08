@@ -3,7 +3,7 @@ import { Service } from '../service/generyService.js';
 
 export default class RegistrationController {
 
-    async login(req, res) {
+    async login(req, res,next) {
         try {
             console.log("I'm here login")
             const regService = new RegistrationService();
@@ -14,17 +14,15 @@ export default class RegistrationController {
             return res.status(200).json({ status: 200, data: result });
         }
         catch (ex) {
-            return res.status(500).end(`${ex}`)
-            // const err = {}
-            // err.status = 500;
-            // err.message = ex;
-            // next(err)
+            const err = {}
+            err.status = 500;
+            err.message = ex;
+            next(err)
         }
     }
-    async register(req, res) {
+    async register(req, res,next) {
         try {
             const service = new Service();
-            // const passwordService = new PasswordService();
             let result = await service.add('users',req.body[0]);
             console.log("resultttt" + result.insertId)
             let pswd = req.body[1]
@@ -35,11 +33,10 @@ export default class RegistrationController {
             return res.status(201).json({ user: user });
         }  
         catch (ex) {
-            return res.status(500).end(`${ex}`)
-            // const err = {}
-            // err.status = 500;
-            // err.message = ex;
-            // next(err)
+            const err = {}
+            err.status = 500;
+            err.message = ex;
+            next(err)
         }
     }
 }

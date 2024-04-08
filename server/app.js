@@ -18,7 +18,7 @@ app.use('/todo', todoRouter);
 app.use('/password', passwordRouter);
 app.use('/comment', commentRouter);
 app.use('/', regRouter);
-// app.use(logErrors);
+app.use(logErrors);
 
 app.listen(8081, () => {
     console.log("start server port: 8081");

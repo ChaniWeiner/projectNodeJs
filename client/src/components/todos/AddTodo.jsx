@@ -26,14 +26,15 @@ function AddTodo({ arrOfTodos, setArrOfTodos, setAddScreen, setArrTodosToDisplay
                     completed: currentTodo.completed
                 })
             })
-            .then(data=>data.json())
-            .then((response) => {
+            .then(response => {if(!response.ok) throw new Error(`status: ${response.status}`); return response.json()})
+            .then((data) => {
                 alert("Todo added succefuly!");
-                currentTodo.id=response["id"]
+                currentTodo.id=data["id"]
                 setArrTodosToDisplay([...arrOfTodos, currentTodo]);
                 setArrOfTodos([...arrOfTodos, currentTodo]);
                 setAddScreen(false);
-            }).catch(ex => console.log(ex))
+            }).catch((err) => {console.error(err); alert("something went wrong please try later")})
+
     }
 
     return (<>
