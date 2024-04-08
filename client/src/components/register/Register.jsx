@@ -13,6 +13,7 @@ function Register() {
     const navigate = useNavigate();
     useEffect(() => { setVerifyFail(false) }, [])
     const {
+        reset,
         register,
         handleSubmit,
         formState: { errors },
@@ -38,6 +39,7 @@ function Register() {
                 setUser(data["user"])
                 localStorage.setItem("user", (JSON.stringify({ userId: data["user"].id, username: data["user"].username })));
                 navigate(`/home/user/${data["user"].id}`);
+                reset()
             })
     }
 
@@ -62,6 +64,7 @@ function Register() {
                         setUserIdentificationInformation({ username: username, password: password });
                         navigate('/register/details');
                     }
+                    reset()
                 })
         }
     }

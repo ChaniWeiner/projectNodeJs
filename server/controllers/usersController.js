@@ -20,8 +20,8 @@ export default class UsersController {
             console.log("The username in query: " + req.query.username)
             const service = new Service();
             const data = await service.getByParameter('users','username',req.query.username);
-            console.log("Hi data:"+data[0].name)
-            if (data[0]===undefined||data[0].length == 0) {
+            console.log("Hi data:"+data.name)
+            if (data[0]===undefined||data.length == 0) {
                 return res.json({ status: 404, data: null })
             }
             console.log("ggggg " + data.name)

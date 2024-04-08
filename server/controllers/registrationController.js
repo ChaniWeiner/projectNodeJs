@@ -1,6 +1,5 @@
 import { RegistrationService } from '../service/registrationServie.js'
 import { Service } from '../service/generyService.js';
-import { PasswordService } from '../service/passwordService.js';
 
 export default class RegistrationController {
 
@@ -24,17 +23,17 @@ export default class RegistrationController {
     }
     async register(req, res) {
         try {
-            const userService = new Service();
-            const passwordService = new PasswordService();
-            let result = await userService.add('users',req.body[0]);
+            const service = new Service();
+            // const passwordService = new PasswordService();
+            let result = await service.add('users',req.body[0]);
             console.log("resultttt" + result.insertId)
             let pswd = req.body[1]
             let user = req.body[0]
             user.id = result.insertId
             pswd.userId = result.insertId
-            await passwordService.addPassword(pswd)
+            await service.add('passwords',pswd)
             return res.status(201).json({ user: user });
-        }
+        }  
         catch (ex) {
             return res.status(500).end(`${ex}`)
             // const err = {}
