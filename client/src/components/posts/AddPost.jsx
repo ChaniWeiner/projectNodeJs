@@ -18,8 +18,8 @@ function AddPost({ arrOfPosts, setArrOfPosts, setAddScreen, setArrPostsToDisplay
             headers: { 'Content-Type': 'application/json', 'charset':'UTF-8' },
             method: 'POST',
             body: JSON.stringify({
-                userId: currentPost.userId,
                 id: currentPost.id,
+                userId: currentPost.userId,
                 title: currentPost.title,
                 body: currentPost.body
             })

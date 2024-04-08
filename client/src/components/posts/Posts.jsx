@@ -27,15 +27,17 @@ function Posts() {
     }, [])
 
     function deletePost(dataId, userId) {
-        let filtered
-        fetch(`http://localhost:8081/post/${dataId}`, {
-            method: "DELETE",
-        })
-            .then(response => response.json())
-            .then(filtered = arrOfPosts.filter(obj => {
-                return obj.id != dataId;
+        if (confirm(`Please note that deleting this post will also delete all comments linked to it.\nDo you want to continue?`)) {
+            let filtered
+            fetch(`http://localhost:8081/post/${dataId}`, {
+                method: "DELETE",
             })
-            ).then(setArrPostsToDisplay(filtered)).then(setArrOfPosts(filtered))
+                .then(response => response.json())
+                .then(filtered = arrOfPosts.filter(obj => {
+                    return obj.id != dataId;
+                })
+                ).then(setArrPostsToDisplay(filtered)).then(setArrOfPosts(filtered))
+        }
     }
 
     function updatePost(event, post, i) {

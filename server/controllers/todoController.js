@@ -1,23 +1,11 @@
-import { TodoService } from '../service/todoService.js'
+import { Service } from '../service/generyService.js';
 
 export default class TodoController {
 
-    async getTodos(req, res, next) {
-        try {
-            const todoService = new TodoService();
-            const data = await todoService.getAllTodos();
-            return res.json(data);
-        }
-        catch (err) {
-            return res.status(404).end(`${err}`)
-        }
-
-    }
-
     async getTodoById(req, res, next) {
         try {
-            const todoService = new TodoService();
-            const data = await todoService.getById(req.params.id);
+            const service = new Service();
+            const data = await service.getById('todos',req.params.id);
             return res.json(data);
         }
         catch (err) {
@@ -27,8 +15,8 @@ export default class TodoController {
 
     async getTodosByUserId(req, res, next) {
         try {
-            const todoService = new TodoService();
-            const data = await todoService.getByUserId(req.query.userId);
+            const service = new Service();
+            const data = await service.getByParameter('todos','userId',req.query.userId);
             return res.json(data);
         }
         catch (err) {
@@ -39,8 +27,8 @@ export default class TodoController {
     async addTodo(req, res) {
         try {
             console.log(req.body)
-            const todoService = new TodoService();
-            let result=await todoService.addTodo(req.body);
+            const service = new Service();
+            let result=await service.add('todos',req.body);
             return res.status(201).json({id: result.insertId});
         }
         catch (ex) {
@@ -54,8 +42,8 @@ export default class TodoController {
     }
     async deleteTodo(req, res) {
         try {
-            const todoService = new TodoService();
-            await todoService.deleteTodo(req.params.id);
+            const service = new Service();
+            await service.delete('todos',req.params.id);
             res.status(200).end(`Todo with id: ${req.params.id} deleted succefuly`);
         }
         catch (ex) {
@@ -70,10 +58,9 @@ export default class TodoController {
     async updateTodo(req, res) {
         try {
             console.log(req.body)
-            const todoService = new TodoService();
-            await todoService.updateTodo(req.body, req.params.id);
+            const service = new Service();
+            await service.update('todos',req.body, req.params.id);
             return res.json({ status: 200, data: req.body });
-            // res.status(200).end(`Todo with id: ${req.params.id} updated succefuly`);
         }
         catch (ex) {
             return res.status(500).end(`${ex}`)

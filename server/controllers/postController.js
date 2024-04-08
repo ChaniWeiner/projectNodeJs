@@ -1,18 +1,17 @@
-import { PostService } from '../service/postService.js'
-
+import { Service } from '../service/generyService.js';
 export default class PostController {
 
     async getPosts(req, res, next) {
         try {
             console.log("I'm here get")
             console.log(req.query.userId)
-            const postService = new PostService();
+            const service = new Service();
             let data = []
             if (req.query.userId === undefined) {
-                data = await postService.getAllPost();
+                data = await service.getAll('posts');
             }
             else {
-                data = await postService.getByUserId(req.query.userId);
+                data = await service.getByParameter('posts','userId',req.query.userId);
             }
             return res.json(data);
         }
@@ -24,32 +23,21 @@ export default class PostController {
 
     async getPostById(req, res, next) {
         try {
-            const postService = new PostService();
-            const data = await postService.getById(req.params.id);
+            const service = new Service();
+            const data = await service.getById('posts',req.params.id);
             return res.json(data);
         }
         catch (err) {
             return res.status(404).end(`${err}`)
         }
 
-    }
-
-    async getPostByUserId(req, res, next) {
-        try {
-            const postService = new PostService();
-            const data = await postService.getByUserId(req.query.userId);
-            return res.json(data);
-        }
-        catch (err) {
-            return res.status(404).end(`${err}`)
-        }
     }
 
     async addPost(req, res) {
         try {
             console.log("I'm here add")
-            const postService = new PostService();
-            let result= await postService.addPost(req.body);
+            const service = new Service();
+            let result= await service.add('posts',req.body);
             return res.status(201).json({id: result.insertId});
         }
         catch (ex) {
@@ -62,8 +50,8 @@ export default class PostController {
     }
     async deletePost(req, res) {
         try {
-            const postService = new PostService();
-            await postService.deletePost(req.params.id);
+            const service = new Service();
+            await service.delete('posts',req.params.id);
             res.json({ status: 200, data: req.params.id });
         }
         catch (ex) {
@@ -77,8 +65,8 @@ export default class PostController {
 
     async updatePost(req, res) {
         try {
-            const postService = new PostService();
-            await postService.updatePost(req.body, req.params.id);
+            const service = new Service();
+            await service.update('posts',req.body, req.params.id);
             return res.json({ status: 200, data: req.body });
         }
         catch (ex) {

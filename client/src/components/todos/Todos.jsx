@@ -16,7 +16,7 @@ function Todos() {
     const [indexOfTodo, setIndexOfTodo] = useState()
 
     useEffect(() => {
-        console.log(user.id)
+        console.log("userId "+user.id)
         fetch(`http://localhost:8081/todo?userId=${user.id}`)
             .then(response => response.json())
             .then(data => { console.log(data); setArrOfTodos(data); setArrTodosToDisplay(data) });

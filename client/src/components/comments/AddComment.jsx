@@ -5,8 +5,8 @@ function AddComment({ arrOfComments, setArrOfComments, setAddScreen, user, post 
     function createComment(event) {
         event.preventDefault();
         let comment = {
-            postId: post.id,
             id: null,
+            postId: post.id,
             email: user.email,
             name: event.target[0].value,
             body: event.target[1].value,
@@ -19,8 +19,8 @@ function AddComment({ arrOfComments, setArrOfComments, setAddScreen, user, post 
             headers: { 'Content-Type': 'application/json', 'charset':'UTF-8' },
             method: 'POST',
             body: JSON.stringify({
-                postId: currentComment.postId,
                 id: currentComment.id,
+                postId: currentComment.postId,
                 name: currentComment.name,
                 email: currentComment.email,
                 body: currentComment.body

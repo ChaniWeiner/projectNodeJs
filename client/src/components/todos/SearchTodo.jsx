@@ -39,6 +39,7 @@ function SearchTodo({ arrOfTodos, setArrTodosToDisplay }) {
         switch (event.target.value) {
             case "searchByAll":
                 setTypeSearch("all")
+                setArrTodosToDisplay([...arrOfTodos])
                 break;
             case "searchById":
                 setTypeSearch("id")

@@ -26,8 +26,8 @@ function Register() {
                 id: null,
                 name: data.name,
                 username: userIdentificationInformation.username,
-                email: data.email,
-                phone: data.phone
+                phone: data.phone,
+                email: data.email
             },
             { userId: null, password: userIdentificationInformation.password }
             ])

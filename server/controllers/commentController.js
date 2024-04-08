@@ -1,24 +1,12 @@
-import { CommentService } from '../service/commentService.js'
+import { Service } from '../service/generyService.js';
 
 export default class CommentController {
 
-    async getComment(req, res, next) {
-        try {
-            const commentService = new CommentService();
-            const data = await commentService.getAllComment();
-            return res.json(data);
-        }
-        catch (err) {
-            return res.status(404).end(`${err}`)
-        }
-
-    }
-
     async getCommentByPostId(req, res, next) {
         try {
-            const commentService = new CommentService();
+            const service = new Service();
             console.log(req.query)
-            const data = await commentService.getByPostId(req.query.postId);
+            const data = await service.getByParameter('comments','postId',req.query.postId);
             return res.json(data);
         }
         catch (err) {
@@ -28,8 +16,8 @@ export default class CommentController {
 
     async getCommentById(req, res, next) {
         try {
-            const commentService = new CommentService();
-            const data = await commentService.getById(req.params.id);
+            const service = new Service();
+            const data = await service.getById('comments',req.params.id);
             return res.json(data);
         }
         catch (err) {
@@ -40,8 +28,8 @@ export default class CommentController {
 
     async addComment(req, res) {
         try {
-            const commentService = new CommentService();
-            let result=await commentService.addComment(req.body);
+            const service = new Service();
+            let result=await service.add('comments',req.body);
             return res.status(201).json({id: result.insertId});
         }
         catch (ex) {
@@ -54,8 +42,8 @@ export default class CommentController {
     }
     async deleteComment(req, res) {
         try {
-            const commentService = new CommentService();
-            await commentService.deleteComment(req.params.id);
+            const service = new Service();
+            await service.delete('comments',req.params.id);
             res.status(200).end(`Comment with id: ${req.params.id} deleted succefuly`);
         }
         catch (ex) {
@@ -69,9 +57,9 @@ export default class CommentController {
 
     async updateComment(req, res) {
         try {
-            const commentService = new CommentService();
+            const service = new Service();
             console.log("in controller: "+req.params.id+" body: "+req.body.name)
-            await commentService.updateComment(req.body, req.params.id);
+            await service.update('comments',req.body, req.params.id);
             return res.json({ status: 200, data: req.body });
         }
         catch (ex) {
