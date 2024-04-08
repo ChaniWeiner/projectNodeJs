@@ -85,16 +85,6 @@ function Register() {
         </div>
     }
 
-    // function phoneErrors() {
-    //     let types = ["required", "pattern", "minLength", "maxLength"]
-    //     let messages = ["Phone is required.", "Phone should include only numbers.",
-    //         "Phone should be at-least 9 characters.", "Phone should be not-more 9 characters."
-    //     ]
-    //     for (let index = 0; index < types.length; index++) {
-    //         return errors.phone && errors.phone.type === types[index] && (<p className="errorMsg">{messages[index]}</p>)
-    //     }
-    // }
-
     function detailesForm() {
 
         return <form onSubmit={handleSubmit(signUp)}>
@@ -110,7 +100,6 @@ function Register() {
             {errors.email && errors.email.type === "pattern" && (<p className="errorMsg">Email is not valid.</p>)}
             <br />
             <input type='tel' placeholder='phone' {...register("phone", { required: true, pattern: /^[0-9]+$/, minLength: 9, maxLength: 10 })} />
-            {/* {phoneErrors()} */}
             {errors.phone && errors.phone.type === "required" && (<p className="errorMsg">Phone is required.</p>)}
             {errors.phone && errors.phone.type === "pattern" && (<p className="errorMsg">Phone should include only numbers.</p>)}
             {errors.phone && errors.phone.type === "minLength" && (<p className="errorMsg">Phone should be at-least 9 characters.</p>)}

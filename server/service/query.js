@@ -19,6 +19,7 @@ async function executeQuery(query, params){
 
     } catch (err) {
         console.log(err);
+        throw err
     }
     finally {
         connection.end();

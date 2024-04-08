@@ -3,6 +3,7 @@ import { AiFillDelete } from "react-icons/ai";
 import { RiEdit2Fill } from "react-icons/ri";
 import { useLocation } from "react-router-dom";
 import { currentUserContext } from '../Main'
+import { useNavigate } from "react-router-dom";
 import './comments.css'
 import AddComment from './AddComment';
 import { useContext } from 'react';
@@ -19,14 +20,14 @@ function Comments() {
 
     useEffect(() => {
         fetch(`http://localhost:8081/comment?postId=${post.id}`)
-            .then(response => (response.json()))
+            .then(response => response.json())
             .then(data => setArrOfComments(data));
     }, [])
 
     function deleteComment(commentId) {
         let filtered
         fetch(`http://localhost:8081/comment/${commentId}`, {
-            method: "DELETE",
+            method: "DELETE"
         })
             .then(response => response.json())
             .then(filtered = arrOfComments.filter(obj => {

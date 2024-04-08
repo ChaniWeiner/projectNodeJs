@@ -10,23 +10,17 @@ function Info() {
     const [changePswd, setChangePswd] = useState(false)
 
     function changePassword(data) {
-        // let curPswd = data.curPswd
-        // let newPswd = data.newPswd
-        let userId = user.id
-        // console.log("The pswds: " + curPswd + " " + newPswd + "" + userId)
         fetch(`http://localhost:8081/password/${user.id}`,
             {
                 headers: { 'Content-Type': 'application/json', 'charset': 'UTF-8' },
                 method: 'PUT',
                 body: JSON.stringify({
-                    // userId: userId,
                     curPswd: data.curPswd,
                     newPswd: data.newPswd
                 })
             })
             .then(result => result.json())
             .then(data => {
-                console.log("The data: " + data.status+data+data["status"])
                 if (data.status == 200) {
                     alert("password updated succefuly!")
                 }
@@ -46,6 +40,7 @@ function Info() {
         handleSubmit,
         formState: { errors },
     } = useForm();
+
     return (
         <>
             <div className='info-container'>

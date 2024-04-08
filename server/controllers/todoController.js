@@ -16,11 +16,12 @@ export default class TodoController {
     async getTodosByUserId(req, res, next) {
         try {
             const service = new Service();
-            const data = await service.getByParameter('todos','userId',req.query.userId);
+            const data = await service.getByParameter('todo','userId',req.query.userId);
             return res.json(data);
         }
         catch (err) {
-            return res.status(404).end(`${err}`)
+            return `Internal Server Error\nYou may not see any todo\n(${err.message})`
+            // throw res.status(500).json({ error: `Internal Server Error\nYou may not see any todo\n(${err.message})`, status: 500 })
         }
     }
 

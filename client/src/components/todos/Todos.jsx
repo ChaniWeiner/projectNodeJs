@@ -17,10 +17,11 @@ function Todos() {
 
     useEffect(() => {
         const curUser = JSON.parse(localStorage.getItem("user"));
-        console.log("userId "+curUser.userId)
+        console.log("userId " + curUser.userId)
         fetch(`http://localhost:8081/todo?userId=${curUser.userId}`)
             .then(response => response.json())
-            .then(data => { console.log(data); setArrOfTodos(data); setArrTodosToDisplay(data) });
+            .then(data => { console.log(data); setArrOfTodos(data); setArrTodosToDisplay(data) })
+            .catch(err => alert(err))
     }, [])
 
     function deleteTodo(dataId) {

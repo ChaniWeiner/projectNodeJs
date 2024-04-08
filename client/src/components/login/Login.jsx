@@ -15,7 +15,6 @@ function Login() {
     }
 
     function getUserFromDb(username, password) {
-        console.log("The username: " + username)
         fetch(`http://localhost:8081/login`,
             {
                 headers: { 'Content-Type': 'application/json', 'charset': 'UTF-8' },
@@ -27,7 +26,6 @@ function Login() {
             })
             .then(result=>result.json())
             .then(data => {
-                // console.log("The data: " + data.status+data.data+data.data.id+data.status+data["data"].phone)
                 if (data.status == 200) {
                     let user = data["data"]
                     setUser(user)

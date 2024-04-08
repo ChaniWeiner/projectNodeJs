@@ -6,13 +6,12 @@ export default class UsersController {
         try {
             const service = new Service();
             const data = await service.getById('users',req.params.id);
-            return res.json(data);
+            return res.json(data);  
         }
         catch (err) {
-            console.log(err)
-            return res.status(500).end(`${err}`)
+            console.log("err   "+err)
+            return res.status(500).json({status:500,data:err})
         }
-
     }
 
     async getUserByUsername(req, res, next) {

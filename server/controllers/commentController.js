@@ -6,18 +6,18 @@ export default class CommentController {
         try {
             const service = new Service();
             console.log(req.query)
-            const data = await service.getByParameter('comments','postId',req.query.postId);
-            return res.json(data);
+            const data = await service.getByParameter('comments', 'postId', req.query.postId);
+            return res.status(200).json(data);
         }
         catch (err) {
-            return res.status(404).end(`${err}`)
+            return res.status(500).json({ error: `Internal Server Error\nYou may not see any comments\n(${err.message})`, status: 500 })
         }
     }
 
     async getCommentById(req, res, next) {
         try {
             const service = new Service();
-            const data = await service.getById('comments',req.params.id);
+            const data = await service.getById('comments', req.params.id);
             return res.json(data);
         }
         catch (err) {
@@ -29,8 +29,8 @@ export default class CommentController {
     async addComment(req, res) {
         try {
             const service = new Service();
-            let result=await service.add('comments',req.body);
-            return res.status(201).json({id: result.insertId});
+            let result = await service.add('comments', req.body);
+            return res.status(201).json({ id: result.insertId });
         }
         catch (ex) {
             return res.status(500).end(`${ex}`)
@@ -43,7 +43,7 @@ export default class CommentController {
     async deleteComment(req, res) {
         try {
             const service = new Service();
-            await service.delete('comments',req.params.id);
+            await service.delete('comments', req.params.id,'email',req.body.email);
             res.status(200).end(`Comment with id: ${req.params.id} deleted succefuly`);
         }
         catch (ex) {
@@ -58,8 +58,8 @@ export default class CommentController {
     async updateComment(req, res) {
         try {
             const service = new Service();
-            console.log("in controller: "+req.params.id+" body: "+req.body.name)
-            await service.update('comments',req.body, req.params.id);
+            console.log("in controller: " + req.params.id + " body: " + req.body.name)
+            await service.update('comments', req.body, req.params.id);
             return res.json({ status: 200, data: req.body });
         }
         catch (ex) {
