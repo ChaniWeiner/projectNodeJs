@@ -24,7 +24,6 @@ export default class RegistrationController {
         try {
             const service = new Service();
             let result = await service.add('users',req.body[0]);
-            console.log("resultttt" + result.insertId)
             let pswd = req.body[1]
             let user = req.body[0]
             user.id = result.insertId

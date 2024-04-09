@@ -5,7 +5,6 @@ export default class CommentController {
     async getCommentByPostId(req, res, next) {
         try {
             const service = new Service();
-            console.log(req.query)
             const data = await service.getByParameter('comments', 'postId', req.query.postId);
             return res.status(200).json(data);
         }
@@ -62,7 +61,6 @@ export default class CommentController {
     async updateComment(req, res,next) {
         try {
             const service = new Service();
-            console.log("in controller: " + req.params.id + " body: " + req.body.name)
             await service.update('comments', req.body,null, req.params.id);
             return res.json({ status: 200, data: req.body });
         }

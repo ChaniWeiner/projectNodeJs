@@ -11,7 +11,6 @@ export class Service {
         return result;
     }
     async getByParameter(tableName, type, parameter, orderBy = 'id', limit = Number.MAX_SAFE_INTEGER) {
-        console.log("the parameter:" + parameter)
         const result = await executeQuery(`select * from ${process.env.DB_NAME}.${tableName} where ${type}=? order by ${orderBy} limit ${limit}`, [parameter]);
         return result;
     }
