@@ -1,8 +1,8 @@
-# Share and Manage  
+# ShareAndManage  
 Collaborative Management App  
 
 ## Project Overview:
-Share and Manage is a full-stack web application designed to enable users to manage posts, comments, albums, and tasks efficiently. The app allows for collaboration between users, with features such as sharing and interacting with content.
+ShareAndManage is a full-stack web application, developed from scratch, designed to enable users to manage posts, comments, albums, and tasks efficiently. Both the **client-side** and **server-side** were built entirely by the team, demonstrating a strong understanding of full-stack development.
 
 ## Features:
 - **Post Management**: Create, edit, and share posts.  
@@ -14,4 +14,6 @@ Share and Manage is a full-stack web application designed to enable users to man
 - **Frontend**: React, JavaScript  
 - **Backend**: Node.js  
 - **Database**: MySQL  
+
+
 
